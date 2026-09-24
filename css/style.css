@@ -27,6 +27,8 @@
   --text: #eae6dd;
   --text-secondary: #b4aea3;
   --line: rgba(234, 230, 221, 0.24);
+  /* Outlines of what can be pressed need 3:1 against the background; plain rules stay quieter. */
+  --control-line: rgba(234, 230, 221, 0.42);
   --action: #c2481c;
   --on-action: #fffdf8;
   --info: #d9a227;
@@ -75,6 +77,11 @@ button {
   border-radius: 0;
   padding: 0;
   cursor: pointer;
+}
+
+/* Every press answers at once, before any sound or screen change confirms it. */
+button:active:not(:disabled) {
+  opacity: 0.72;
 }
 
 button:focus-visible {
@@ -142,11 +149,12 @@ button:focus-visible {
 
 .languages {
   display: flex;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
 }
 
 .languages button {
-  width: 34px;
+  position: relative;
+  width: 38px;
   height: 30px;
   font-family: var(--mono);
   font-size: 11px;
@@ -155,8 +163,20 @@ button:focus-visible {
   color: var(--text-secondary);
 }
 
+/* A 44 px tall hit area around a smaller box. */
+.languages button::after,
+.field .toggle::after {
+  content: '';
+  position: absolute;
+  inset: -7px 0;
+}
+
+.field .toggle::after {
+  inset: -13px -8px;
+}
+
 .languages button + button {
-  border-left: 1px solid var(--line);
+  border-left: 1px solid var(--control-line);
 }
 
 .languages button[aria-pressed='true'] {
@@ -286,7 +306,7 @@ button:focus-visible {
 .segmented {
   flex: none;
   display: flex;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
 }
 
 .segmented button {
@@ -299,7 +319,7 @@ button:focus-visible {
 }
 
 .segmented button + button {
-  border-left: 1px solid var(--line);
+  border-left: 1px solid var(--control-line);
 }
 
 .segmented button[aria-pressed='true'] {
@@ -318,7 +338,7 @@ button:focus-visible {
   position: relative;
   width: 56px;
   height: 44px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--surface);
   display: flex;
   align-items: center;
@@ -361,6 +381,7 @@ button:focus-visible {
 
 /* The per-exercise rows hang under the work row, set in so they read as its detail. */
 .field .toggle {
+  position: relative;
   align-self: flex-start;
   padding: 2px 0;
   font-size: 11px;
@@ -445,7 +466,7 @@ button:focus-visible {
 .secondary {
   width: 100%;
   height: 60px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   font-family: var(--display);
   font-weight: 800;
   font-size: 26px;
@@ -464,7 +485,7 @@ button:focus-visible {
   position: relative;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
 }
 
 .close i,
@@ -724,7 +745,7 @@ button:focus-visible {
 }
 
 .commands .side {
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--surface);
   color: var(--text);
   display: flex;
@@ -733,7 +754,7 @@ button:focus-visible {
   justify-content: center;
   gap: 8px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.12em;
 }
@@ -808,7 +829,7 @@ button:focus-visible {
 }
 
 .sheet .choices .leave {
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
 }
 
 .sheet .choices .stay {
@@ -916,9 +937,13 @@ button > * {
     column-gap: 72px;
   }
 
+  /* One header height on every screen, so switching screens never shifts the title. */
+  .brandbar {
+    height: 96px;
+  }
+
   .setup > .brandbar {
     grid-area: header;
-    height: 96px;
     padding: 0;
   }
 
@@ -1101,5 +1126,129 @@ button > * {
 
   .stepper .value .display {
     font-size: 27px;
+  }
+}
+
+/* Phase changes and pauses snap instead of fading for anyone who asked the system for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .session,
+  .session .content {
+    transition: none;
+  }
+}
+
+/* A phone on its side: the figures take the right half, phase and position the left, and the
+   commands shrink to one short row. Placed last so it also wins over the wide-screen rules. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .session .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    grid-template-rows: auto auto auto auto minmax(0, 1fr);
+    grid-template-areas:
+      'top top'
+      'gauge gauge'
+      'heading clock'
+      'position clock'
+      'next clock';
+    column-gap: 24px;
+    max-width: none;
+    padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+  }
+
+  .session .top,
+  .session .heading,
+  .session .position {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .session .top {
+    grid-area: top;
+    height: 48px;
+    margin-top: 4px;
+  }
+
+  .session .gauge {
+    grid-area: gauge;
+    height: 14px;
+    margin: 4px 0 0;
+  }
+
+  .session .heading {
+    grid-area: heading;
+    padding-top: 12px;
+    gap: 4px;
+  }
+
+  .session .phase-name {
+    font-size: clamp(28px, 11dvh, 48px);
+  }
+
+  .session .clock {
+    grid-area: clock;
+    padding: 8px 0;
+  }
+
+  .session .digits {
+    font-size: min(calc(55vw / var(--width)), 60dvh);
+    font-size: min(calc(100cqw / var(--width)), calc(100cqh - var(--label)));
+  }
+
+  .session .position {
+    grid-area: position;
+    padding-top: 12px;
+    padding-bottom: 0;
+    gap: 12px;
+  }
+
+  .session .position .display {
+    font-size: clamp(22px, 7dvh, 32px);
+  }
+
+  .session .next {
+    grid-area: next;
+    align-self: start;
+    margin: 10px 0 0;
+    padding: 8px 0;
+    font-size: 13px;
+  }
+
+  .commands {
+    padding: 6px max(12px, env(safe-area-inset-right)) calc(var(--safe-bottom) + 6px) max(12px, env(safe-area-inset-left));
+  }
+
+  .commands .row {
+    height: 56px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .commands .side {
+    flex-direction: row;
+  }
+
+  .end .body {
+    gap: 16px;
+  }
+
+  .end .title {
+    font-size: 56px;
+  }
+
+  .end .times > div {
+    padding: 8px 0;
+  }
+
+  .end .times .display {
+    font-size: 40px;
+  }
+
+  .end .actions {
+    flex-direction: row;
+  }
+
+  .end .actions .primary,
+  .end .actions .secondary {
+    height: 56px;
   }
 }

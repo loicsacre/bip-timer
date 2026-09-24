@@ -945,6 +945,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+// Safari only applies :active to a press when the page listens to touches.
+document.addEventListener('touchstart', () => {}, { passive: true });
+
 render();
 
 if ('serviceWorker' in navigator) {

@@ -1,7 +1,7 @@
 {
   "name": "BIP Timer",
   "short_name": "BIP Timer",
-  "description": "Minuteur par intervalles : exercices, tours, séries et récupérations.",
+  "description": "Minuteur d’intervalles pour un bloc complet : exercices, tours et récupérations. Réglé en dix secondes, lancé en un tap.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

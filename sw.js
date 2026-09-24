@@ -1,7 +1,7 @@
 // Serves the app from the cache so it opens offline, and refreshes the cache in the background:
 // a new version shows on the launch after the one that fetched it. Bump VERSION when a file is
 // added or removed.
-const VERSION = 'bip-timer-v3';
+const VERSION = 'bip-timer-v4';
 
 const FILES = [
   './',
@@ -20,6 +20,8 @@ const FILES = [
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',
   'icons/favicon-32.png',
+  'icons/icon-maskable-512.png',
+  'icons/icon.svg',
 ];
 
 self.addEventListener('install', (event) => {

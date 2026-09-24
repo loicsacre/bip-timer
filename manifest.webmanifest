@@ -1,6 +1,6 @@
 {
-  "name": "bip minuteur",
-  "short_name": "bip",
+  "name": "BIP Timer",
+  "short_name": "BIP Timer",
   "description": "Minuteur par intervalles : exercices, tours, séries et récupérations.",
   "start_url": "./",
   "scope": "./",

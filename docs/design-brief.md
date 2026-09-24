@@ -1,4 +1,4 @@
-# bip minuteur : brief de design
+# BIP Timer : brief de design
 
 ## Le produit
 

@@ -1,7 +1,7 @@
-import { DEFAULT_SETTINGS, StepKind, buildSteps, isCounted } from './sequence.js';
+import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, isCounted } from './sequence.js';
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
-import { lang, t } from './i18n.js';
+import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
 
 const STORAGE_KEY = 'bip-timer-settings';
 
@@ -165,6 +165,17 @@ function summary(settings) {
   return `${t.steps(steps.length)} · ${duration}${settings.unit === 'reps' ? t.plusReps : ''}`;
 }
 
+// The run at a glance, each step as wide as it lasts; only shown where there is room for it.
+function timeline(settings) {
+  const steps = buildSteps(settings);
+  const weight = (step) => (isCounted(step) ? step.reps * SECONDS_PER_REPETITION : step.seconds);
+  const segments = steps
+    .map((step) => `<i style="flex-grow: ${weight(step)}; background: ${PHASE_COLORS[phaseOf(step)]}"></i>`)
+    .join('');
+
+  return `<div class="timeline${steps.length > 60 ? ' dense' : ''}" aria-hidden="true">${segments}</div>`;
+}
+
 function brandbar(right) {
   return `
     <header class="brandbar">
@@ -180,11 +191,19 @@ function renderSetup() {
   const circuit = settings.structure === 'circuit';
   const reps = settings.unit === 'reps';
 
-  const help = `<button type="button" class="help-button" data-action="help">${t.help}<span>?</span></button>`;
+  const languages = LANGUAGES.map(
+    (code) =>
+      `<button type="button" data-action="language" data-value="${code}" aria-pressed="${code === lang}" lang="${code}">${code.toUpperCase()}</button>`,
+  ).join('');
+  const tools = `
+    <div class="tools">
+      <div class="languages" role="group" aria-label="${t.language}">${languages}</div>
+      <button type="button" class="help-button" data-action="help" aria-label="${t.help}"><span class="label">${t.help}</span><span class="mark">?</span></button>
+    </div>`;
 
   return `
     <section class="screen setup">
-      ${brandbar(help)}
+      ${brandbar(tools)}
       <p class="intro">${t.intro}</p>
       <div class="fields">
         <div class="field choice">
@@ -202,6 +221,7 @@ function renderSetup() {
         </div>
       </div>
       <footer class="launch">
+        ${timeline(settings)}
         <div class="summary"><span class="mono">${t.summary}</span><strong>${summary(settings)}</strong></div>
         ${wakeLockSupported ? '' : `<p class="notice">${t.noWakeLock}</p>`}
         <button type="button" class="primary" data-action="start">${PLAY_ICON}<span class="display">${t.start}</span></button>
@@ -289,15 +309,14 @@ function nextText(run, circuit) {
   return t.nextRecovery(clock(upcoming.seconds));
 }
 
-// Fixed-width boxes per character, sized so the widest figure still fits the phone's width and
-// shrinks on short screens.
+// Fixed-width boxes per character; the stylesheet sizes them from the text's width in em so the
+// widest figure still fits the screen.
 function digits(text, counted) {
   const size = counted ? 260 : text.length <= 4 ? 184 : 150;
   const width = [...text].reduce((total, character) => total + (character === ':' ? 0.28 : 0.54), 0);
-  const fontSize = `min(${size}px, calc((min(100vw, 480px) - 40px) / ${width}), ${((size / 844) * 100).toFixed(1)}dvh)`;
   const boxes = [...text].map((character) => `<span${character === ':' ? ' class="colon"' : ''}>${character}</span>`).join('');
 
-  return `<div class="digits" style="font-size: ${fontSize}">${boxes}</div>`;
+  return `<div class="digits" style="--size: ${size}; --width: ${width.toFixed(2)}; --label: ${counted ? 28 : 0}px">${boxes}</div>`;
 }
 
 function frise(step, rounds) {
@@ -341,7 +360,7 @@ const CENTER_ICONS = {
   validate: '<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><polyline points="4,15 11,22 24,6" fill="none" stroke="currentColor" stroke-width="4"/></svg>',
 };
 
-const SHEET = `
+const sheet = () => `
   <div class="sheet-backdrop">
     <div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="quit-title">
       <span class="mono">${t.stopped}</span>
@@ -366,7 +385,7 @@ function renderSessionShell() {
           <span class="ink" data-slot="header"></span>
         </div>
         <div class="heading">
-          <span class="display phase-name" style="font-size: min(56px, 14vw)" data-slot="name"></span>
+          <span class="display phase-name" data-slot="name"></span>
           <span class="ink soft" data-slot="subtitle"></span>
         </div>
         <div class="gauge"><span></span></div>
@@ -426,7 +445,7 @@ function updateSession(view, previous) {
     section.querySelector('.sheet-backdrop')?.remove();
 
     if (view.confirm) {
-      section.insertAdjacentHTML('beforeend', SHEET);
+      section.insertAdjacentHTML('beforeend', sheet());
       section.querySelector('.stay').focus({ preventScroll: true });
     }
   }
@@ -679,6 +698,11 @@ const ACTIONS = {
     const parsed = key === 'sound' ? value === 'true' : value;
 
     changeSetting(key, parsed);
+  },
+  language: (button) => {
+    setLanguage(button.dataset.value);
+    document.documentElement.lang = lang;
+    render();
   },
   start,
   settings: () => {

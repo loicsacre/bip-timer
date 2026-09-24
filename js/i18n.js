@@ -1,7 +1,8 @@
 const STRINGS = {
   fr: {
-    title: 'MINUTEUR',
+    title: 'TIMER',
     help: 'AIDE',
+    language: 'Langue',
     intro: 'Minuteur d’intervalles pour un bloc complet : exercices, tours et récupérations. Règle, puis démarre.',
     structure: 'STRUCTURE',
     circuit: 'CIRCUIT',
@@ -92,6 +93,7 @@ const STRINGS = {
   en: {
     title: 'TIMER',
     help: 'HELP',
+    language: 'Language',
     intro: 'Interval timer for a whole block: exercises, rounds and rests. Set it, then start.',
     structure: 'STRUCTURE',
     circuit: 'CIRCUIT',
@@ -182,6 +184,7 @@ const STRINGS = {
   nl: {
     title: 'TIMER',
     help: 'HULP',
+    language: 'Taal',
     intro: 'Intervaltimer voor een volledig blok: oefeningen, rondes en rust. Instellen, dan starten.',
     structure: 'STRUCTUUR',
     circuit: 'CIRCUIT',
@@ -271,8 +274,48 @@ const STRINGS = {
   },
 };
 
-const language = (navigator.language || 'en').slice(0, 2).toLowerCase();
+const LANGUAGE_KEY = 'bip-timer-language';
 
-export const lang = STRINGS[language] ? language : 'en';
+export const LANGUAGES = ['fr', 'en', 'nl'];
 
-export const t = STRINGS[lang];
+// A language picked by hand wins; otherwise the first of the browser's languages we speak.
+function detect() {
+  try {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+
+    if (STRINGS[saved]) {
+      return saved;
+    }
+  } catch {
+    // Blocked storage falls back to the browser's languages.
+  }
+
+  for (const tag of navigator.languages ?? [navigator.language]) {
+    const code = (tag ?? '').slice(0, 2).toLowerCase();
+
+    if (STRINGS[code]) {
+      return code;
+    }
+  }
+
+  return 'en';
+}
+
+export let lang = detect();
+
+export let t = STRINGS[lang];
+
+export function setLanguage(code) {
+  if (!STRINGS[code]) {
+    return;
+  }
+
+  lang = code;
+  t = STRINGS[code];
+
+  try {
+    localStorage.setItem(LANGUAGE_KEY, code);
+  } catch {
+    // The choice then lasts until the page is closed.
+  }
+}

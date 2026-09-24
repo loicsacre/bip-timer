@@ -1,4 +1,4 @@
-# bip minuteur
+# BIP Timer
 
 Interval timer for a whole training block: several exercises, several rounds or sets, and separate rests between
 exercises and between rounds. It beeps, vibrates, keeps the screen on and works offline once opened. No store, no
@@ -45,6 +45,6 @@ The iPhone silent switch mutes the beeps, and the sound mixes with music already
 - `js/sequence.js`: expands the settings into steps.
 - `js/run.js`: the run, computed from absolute timestamps so it never drifts.
 - `js/device.js`: sound (Web Audio), vibration, screen wake lock.
-- `js/app.js`: the four screens (setup, help, session, end).
-- `js/i18n.js`: French, English and Dutch, picked from the browser language.
+- `js/app.js`: the four screens (setup, help, session, end), in one column on a phone and two on a wide screen.
+- `js/i18n.js`: French, English and Dutch, picked from the browser languages and switchable in the header.
 - Fonts: Archivo, Saira Condensed, IBM Plex Mono (SIL Open Font License, see `fonts/`).

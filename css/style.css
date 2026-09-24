@@ -84,9 +84,7 @@ button:focus-visible {
 
 #app {
   position: relative;
-  max-width: 480px;
   height: 100dvh;
-  margin: 0 auto;
   overflow: hidden;
 }
 
@@ -136,6 +134,36 @@ button:focus-visible {
   letter-spacing: 0.16em;
 }
 
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.languages {
+  display: flex;
+  border: 1px solid var(--line);
+}
+
+.languages button {
+  width: 34px;
+  height: 30px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.languages button + button {
+  border-left: 1px solid var(--line);
+}
+
+.languages button[aria-pressed='true'] {
+  background: var(--selected);
+  color: var(--ink);
+}
+
 .help-button {
   height: 44px;
   padding-left: 12px;
@@ -149,7 +177,7 @@ button:focus-visible {
   letter-spacing: 0.12em;
 }
 
-.help-button span {
+.help-button .mark {
   width: 22px;
   height: 22px;
   border: 1px solid var(--text);
@@ -161,8 +189,19 @@ button:focus-visible {
 
 /* Setup */
 
+/* Setup and end read like a phone sheet on anything up to a laptop. */
+.setup,
+.end {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
 .setup {
   padding-top: var(--safe-top);
+}
+
+.timeline {
+  display: none;
 }
 
 .intro {
@@ -500,7 +539,7 @@ button:focus-visible {
 }
 
 .session .phase-name {
-  font-size: 56px;
+  font-size: min(56px, 14vw);
   line-height: 0.9;
   letter-spacing: 0.01em;
 }
@@ -522,6 +561,7 @@ button:focus-visible {
 .session .clock {
   flex: 1;
   min-height: 0;
+  container-type: size;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -536,6 +576,8 @@ button:focus-visible {
   font-family: var(--display);
   font-weight: 700;
   line-height: 0.9;
+  font-size: min(calc((100vw - 40px) / var(--width)), calc(var(--size) / 844 * 100dvh));
+  font-size: min(calc((100vw - 40px) / var(--width)), calc(var(--size) / 844 * 100dvh), calc(100cqh - var(--label)));
 }
 
 .session .digits span {
@@ -785,4 +827,192 @@ button:focus-visible {
 /* Taps land on the button itself, whatever its icon or label is being redrawn to. */
 button > * {
   pointer-events: none;
+}
+
+/* Narrow phones: the help button keeps only its mark so the language switch fits. */
+@media (max-width: 399px) {
+  .help-button .label {
+    display: none;
+  }
+}
+
+/* Wide screens: the setup splits into what you are about to run and how it is set, and the session
+   uses the whole window. */
+@media (min-width: 900px) {
+  .setup {
+    max-width: 1180px;
+    padding: var(--safe-top) 48px 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'header header'
+      'intro fields'
+      'launch fields';
+    column-gap: 72px;
+  }
+
+  .setup > .brandbar {
+    grid-area: header;
+    height: 96px;
+    padding: 0;
+  }
+
+  .setup .intro {
+    grid-area: intro;
+    padding: 48px 0 0;
+    max-width: 24ch;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.02;
+    color: var(--text);
+  }
+
+  .setup .field .caption {
+    width: auto;
+  }
+
+  .setup .fields {
+    grid-area: fields;
+    align-self: center;
+    max-height: 100%;
+    padding: 24px 0;
+  }
+
+  .setup .launch {
+    grid-area: launch;
+    padding: 0 0 48px;
+    border-top: none;
+  }
+
+  .timeline {
+    display: flex;
+    gap: 2px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .timeline.dense {
+    gap: 0;
+  }
+
+  .timeline i {
+    flex-basis: 0;
+    min-width: 1px;
+  }
+
+  .help .body,
+  .help .foot {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .help > .brandbar {
+    padding: 0 max(20px, calc((100% - 720px) / 2));
+  }
+
+  /* The phase colour fills the window; what the eye follows stays in a centred column. */
+  .session .content {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .session .top,
+  .session .heading {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .session .gauge,
+  .session .next {
+    margin-left: 48px;
+    margin-right: 48px;
+  }
+
+  /* Everything around the clock scales with the window's height, so a short screen still leaves
+     the figures most of the room. */
+  .session .top {
+    margin-top: clamp(8px, 2.5dvh, 32px);
+  }
+
+  .session .heading {
+    padding-top: clamp(4px, 1.5dvh, 20px);
+  }
+
+  .session .clock {
+    padding: clamp(8px, 3dvh, 40px) 0;
+  }
+
+  .session .position {
+    padding-bottom: clamp(4px, 1.5dvh, 16px);
+  }
+
+  .session .phase-name {
+    font-size: clamp(44px, 10dvh, 120px);
+  }
+
+  .session .gauge {
+    height: clamp(16px, 2.6dvh, 28px);
+    margin-top: clamp(10px, 2.5dvh, 32px);
+  }
+
+  .session .digits {
+    font-size: min(calc((min(100vw, 1000px) - 96px) / var(--width)), 38dvh);
+    font-size: min(calc((min(100vw, 1000px) - 96px) / var(--width)), 38dvh, calc(100cqh - var(--label)));
+  }
+
+  .session .position {
+    padding: 0 48px;
+    grid-template-columns: repeat(2, minmax(0, 360px));
+  }
+
+  .session .position .display {
+    font-size: clamp(34px, 5.5dvh, 56px);
+  }
+
+  .session .next {
+    margin-top: clamp(10px, 2.5dvh, 32px);
+    padding: clamp(10px, 2dvh, 20px) 0 clamp(10px, 2.5dvh, 32px);
+    font-size: 18px;
+  }
+
+  .commands .row {
+    height: clamp(76px, 11dvh, 104px);
+    max-width: 904px;
+    margin: 0 auto;
+  }
+
+  .sheet {
+    align-self: center;
+    width: 100%;
+    max-width: 560px;
+    border: 1px solid var(--line);
+  }
+
+  .sheet-backdrop {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .end {
+    max-width: 900px;
+  }
+
+  .end .title {
+    font-size: 160px;
+  }
+
+  .end .body,
+  .end .actions {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .end .actions {
+    padding-bottom: 48px;
+  }
 }

@@ -33,7 +33,15 @@ export function isCounted(step) {
   return step.reps > 0;
 }
 
-// Every exercise carries the same value: this is a quick tool, not the block editor.
+// What exercise `index` works for: its own value when one is set, else the block's.
+export function exerciseValue(settings, key, index) {
+  const own = settings[key === 'reps' ? 'exerciseReps' : 'exerciseEfforts']?.[index];
+
+  return Number.isFinite(own) ? own : settings[key];
+}
+
+// Every exercise carries the block's value unless it has its own: this is a quick tool, not the
+// block editor.
 export function buildSteps(settings) {
   const exercises = Math.max(0, settings.exercises);
 
@@ -55,8 +63,8 @@ export function buildSteps(settings) {
     round,
     index,
     next,
-    seconds: counted ? 0 : settings.effort,
-    reps: counted ? settings.reps : 0,
+    seconds: counted ? 0 : exerciseValue(settings, 'effort', index),
+    reps: counted ? exerciseValue(settings, 'reps', index) : 0,
   });
 
   const rest = (kind, round, index, next, seconds) => ({ kind, round, index, next, seconds, reps: 0 });

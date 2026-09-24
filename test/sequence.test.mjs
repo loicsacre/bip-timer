@@ -108,3 +108,27 @@ describe('planned duration', () => {
     assert.equal(plannedSeconds(steps), 12 * SECONDS_PER_REPETITION);
   });
 });
+
+describe('a value per exercise', () => {
+  test('gives each exercise its own effort, in every round', () => {
+    const steps = buildSteps(settings({ exerciseEfforts: [30, 60] }));
+    const efforts = steps.filter((step) => step.kind === StepKind.work).map((step) => step.seconds);
+
+    assert.deepEqual(efforts, [30, 60, 30, 60]);
+  });
+
+  test('falls back to the block value for an exercise without one', () => {
+    const steps = buildSteps(settings({ exercises: 3, exerciseEfforts: [30] }));
+    const efforts = steps.filter((step) => step.kind === StepKind.work).map((step) => step.seconds);
+
+    assert.deepEqual(efforts, [30, 40, 40, 30, 40, 40]);
+  });
+
+  test('counts each exercise its own repetitions, set after set', () => {
+    const steps = buildSteps(settings({ structure: 'series', unit: 'reps', exerciseReps: [8, 15] }));
+    const reps = steps.filter((step) => step.kind === StepKind.work).map((step) => step.reps);
+
+    assert.deepEqual(reps, [8, 8, 15, 15]);
+    assert.equal(plannedSeconds(steps), (8 + 8 + 15 + 15) * SECONDS_PER_REPETITION + 45 + 20 + 45 + 10);
+  });
+});

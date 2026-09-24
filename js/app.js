@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, isCounted } from './sequence.js';
+import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
@@ -15,6 +15,9 @@ const FIELDS = {
   recRound: { min: 0, max: 600, step: 5, type: 'seconds' },
   recSet: { min: 0, max: 600, step: 5, type: 'seconds' },
 };
+
+// The settings that can also be given per exercise, and where those values are kept.
+const OWN_VALUES = { effort: 'exerciseEfforts', reps: 'exerciseReps' };
 
 const PHASE_COLORS = { prep: 'var(--phase-prep)', effort: 'var(--phase-effort)', recovery: 'var(--phase-recovery)' };
 
@@ -33,6 +36,7 @@ const state = {
   runSettings: null,
   result: null,
   sessionView: null,
+  perExercise: false,
 };
 
 document.documentElement.lang = lang;
@@ -61,12 +65,53 @@ function loadSettings() {
       if (typeof saved.sound === 'boolean') {
         settings.sound = saved.sound;
       }
+
+      for (const [key, list] of Object.entries(OWN_VALUES)) {
+        if (Array.isArray(saved[list])) {
+          settings[list] = saved[list]
+            .slice(0, FIELDS.exercises.max)
+            .map((value) => (Number.isFinite(value) ? clamp(Math.round(value), FIELDS[key]) : settings[key]));
+        }
+      }
     }
   } catch {
     // A private window or blocked storage starts from the defaults.
   }
 
-  return settings;
+  return normalized(settings);
+}
+
+function ownValues(settings, key) {
+  return Array.from({ length: settings.exercises }, (_, index) => exerciseValue(settings, key, index));
+}
+
+function varies(settings, key) {
+  const values = ownValues(settings, key);
+
+  return values.some((value) => value !== values[0]);
+}
+
+// Values for exercises that no longer exist are dropped, and a list where every exercise ends up
+// equal folds back into the block's value, so no hidden base can surprise the next exercise added.
+function normalized(settings) {
+  const next = { ...settings };
+
+  for (const [key, list] of Object.entries(OWN_VALUES)) {
+    if (!next[list]) {
+      continue;
+    }
+
+    next[list] = next[list].slice(0, next.exercises);
+
+    if (varies(next, key)) {
+      continue;
+    }
+
+    next[key] = exerciseValue(next, key, 0);
+    delete next[list];
+  }
+
+  return next;
 }
 
 function saveSettings() {
@@ -99,7 +144,7 @@ function setupRows(settings) {
     ['exercises', t.exercises],
     ['rounds', circuit ? t.rounds : t.sets],
     ['prep', t.prep],
-    settings.unit === 'reps' ? ['reps', t.repsCount] : ['effort', t.effort],
+    ['work'],
   ];
 
   if (settings.exercises > 1) {
@@ -138,23 +183,75 @@ function segmented(key, options) {
   return `<div class="segmented" role="group">${buttons}</div>`;
 }
 
-function stepperRow(key, label, last) {
+// Every value the row stands for: the block's, one exercise's (`effort.2`), or all the exercises'.
+function rowValues(target) {
+  const [key, position] = target.split('.');
+
+  if (position !== undefined) {
+    return [exerciseValue(state.settings, key, Number(position))];
+  }
+
+  return OWN_VALUES[key] ? ownValues(state.settings, key) : [state.settings[key]];
+}
+
+// A row whose exercises differ shows the spread in whole units, short enough for the value box.
+function rangeValue(key, low, high) {
+  return { text: `${low}-${high}`, unit: FIELDS[key].type === 'reps' ? t.repUnit : t.seconds, range: true };
+}
+
+// The phase each timed row sets, so its label carries the colour the run will show.
+const ROW_PHASES = { prep: 'prep', effort: 'effort', reps: 'effort', recExercise: 'recovery', recRound: 'recovery', recSet: 'recovery' };
+
+function stepperRow(target, label, { caption = '', sub = false } = {}) {
+  const key = target.split('.')[0];
   const field = FIELDS[key];
-  const value = state.settings[key];
-  const shown = fieldValue(key, value);
+  const values = rowValues(target);
+  const low = Math.min(...values);
+  const high = Math.max(...values);
+  const shown = low === high ? fieldValue(key, low) : rangeValue(key, low, high);
+  const phase = sub ? null : ROW_PHASES[key];
+  const dot = phase ? `<i class="phase-dot" style="background: ${PHASE_COLORS[phase]}"></i>` : '';
+  const title = `<span class="mono label">${dot}<span>${label}</span></span>`;
+  const heading = caption ? `<div class="caption">${title}${caption}</div>` : title;
 
   return `
-    <div class="field number${last ? ' last' : ''}">
-      <span class="mono">${label}</span>
+    <div class="field number${sub ? ' sub' : ''}">
+      ${heading}
       <div class="stepper">
-        <button type="button" data-step="${key}" data-direction="-1" aria-label="${t.less} ${label}"${value <= field.min ? ' disabled' : ''}><i></i></button>
+        <button type="button" data-step="${target}" data-direction="-1" aria-label="${t.less} ${label}"${high <= field.min ? ' disabled' : ''}><i></i></button>
         <div class="value" aria-live="polite">
-          <span class="display${shown.off ? ' off' : ''}">${shown.text}</span>
+          <span class="display${shown.off ? ' off' : ''}${shown.range ? ' range' : ''}">${shown.text}</span>
           <span class="mono">${shown.unit}</span>
         </div>
-        <button type="button" data-step="${key}" data-direction="1" aria-label="${t.more} ${label}"${value >= field.max ? ' disabled' : ''}><i></i><i></i></button>
+        <button type="button" data-step="${target}" data-direction="1" aria-label="${t.more} ${label}"${low >= field.max ? ' disabled' : ''}><i></i><i></i></button>
       </div>
     </div>`;
+}
+
+// The work row, with the per-exercise values folded under it: out of the way, one tap to open.
+function workRows(settings) {
+  const key = settings.unit === 'reps' ? 'reps' : 'effort';
+  const label = key === 'reps' ? t.repsCount : t.effort;
+
+  if (settings.exercises < 2) {
+    return stepperRow(key, label);
+  }
+
+  const open = state.perExercise;
+  const toggle = `<button type="button" class="toggle" data-action="per-exercise" aria-expanded="${open}">${open ? t.hidePerExercise : t.perExercise}</button>`;
+  let rows = stepperRow(key, label, { caption: toggle });
+
+  if (open) {
+    for (let index = 0; index < settings.exercises; index++) {
+      rows += stepperRow(`${key}.${index}`, t.exerciseShort(index + 1), { sub: true });
+    }
+
+    if (varies(settings, key)) {
+      rows += `<div class="field sub reset"><button type="button" class="toggle" data-action="same-for-all">${t.sameForAll}</button></div>`;
+    }
+  }
+
+  return rows;
 }
 
 function summary(settings) {
@@ -165,7 +262,7 @@ function summary(settings) {
   return `${t.steps(steps.length)} · ${duration}${settings.unit === 'reps' ? t.plusReps : ''}`;
 }
 
-// The run at a glance, each step as wide as it lasts; only shown where there is room for it.
+// The run at a glance, each step as wide as it lasts.
 function timeline(settings) {
   const steps = buildSteps(settings);
   const weight = (step) => (isCounted(step) ? step.reps * SECONDS_PER_REPETITION : step.seconds);
@@ -214,7 +311,7 @@ function renderSetup() {
           <div class="caption"><span class="mono">${t.unit}</span><span class="hint">${reps ? t.repsHint : t.timeHint}</span></div>
           ${segmented('unit', [['time', t.time], ['reps', t.reps]])}
         </div>
-        ${setupRows(settings).map(([key, label]) => stepperRow(key, label)).join('')}
+        ${setupRows(settings).map(([key, label]) => (key === 'work' ? workRows(settings) : stepperRow(key, label))).join('')}
         <div class="field number last">
           <span class="mono">${t.sound}</span>
           ${segmented('sound', [[true, t.on], [false, t.off]])}
@@ -303,7 +400,10 @@ function nextText(run, circuit) {
         : ''
       : t.nextSet(upcoming.round);
 
-    return t.nextExercise(upcoming.index + 1) + where;
+    const amount = isCounted(upcoming) ? ` · ${upcoming.reps} ${t.repUnit}` : ` · ${clock(upcoming.seconds)}`;
+    const differs = varies(state.runSettings, isCounted(upcoming) ? 'reps' : 'effort');
+
+    return t.nextExercise(upcoming.index + 1) + where + (differs ? amount : '');
   }
 
   return t.nextRecovery(clock(upcoming.seconds));
@@ -665,23 +765,46 @@ function center() {
 
 // Controls
 
-function changeSetting(key, value) {
-  state.settings = { ...state.settings, [key]: value };
-  saveSettings();
-  render();
-}
+function applySettings(next) {
+  const settings = normalized(next);
 
-function stepSetting(key, direction) {
-  const field = FIELDS[key];
-  const value = clamp(state.settings[key] + direction * field.step, field);
-
-  if (value === state.settings[key]) {
+  if (JSON.stringify(settings) === JSON.stringify(state.settings)) {
     return false;
   }
 
-  changeSetting(key, value);
+  state.settings = settings;
+  saveSettings();
+  render();
 
   return true;
+}
+
+function changeSetting(key, value) {
+  applySettings({ ...state.settings, [key]: value });
+}
+
+// One exercise moves alone; the shared row moves every exercise by the same step, keeping the gaps.
+function stepSetting(target, direction) {
+  const [key, position] = target.split('.');
+  const field = FIELDS[key];
+  const settings = state.settings;
+  const move = (value) => clamp(value + direction * field.step, field);
+
+  if (position !== undefined) {
+    const values = ownValues(settings, key);
+
+    values[Number(position)] = move(values[Number(position)]);
+
+    return applySettings({ ...settings, [OWN_VALUES[key]]: values });
+  }
+
+  const next = { ...settings, [key]: move(settings[key]) };
+
+  if (OWN_VALUES[key] && settings[OWN_VALUES[key]]) {
+    next[OWN_VALUES[key]] = ownValues(settings, key).map(move);
+  }
+
+  return applySettings(next);
 }
 
 const ACTIONS = {
@@ -698,6 +821,16 @@ const ACTIONS = {
     const parsed = key === 'sound' ? value === 'true' : value;
 
     changeSetting(key, parsed);
+  },
+  'per-exercise': () => {
+    state.perExercise = !state.perExercise;
+    render();
+  },
+  'same-for-all': () => {
+    const next = { ...state.settings };
+
+    delete next[OWN_VALUES[next.unit === 'reps' ? 'reps' : 'effort']];
+    applySettings(next);
   },
   language: (button) => {
     setLanguage(button.dataset.value);

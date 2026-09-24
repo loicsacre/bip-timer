@@ -1,0 +1,16 @@
+{
+  "name": "bip minuteur",
+  "short_name": "bip",
+  "description": "Minuteur par intervalles : exercices, tours, séries et récupérations.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0d0b",
+  "theme_color": "#0e0d0b",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

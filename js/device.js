@@ -14,11 +14,21 @@ export function unlockAudio() {
     return;
   }
 
-  context ??= new AudioContextClass();
-
-  if (context.state === 'suspended') {
-    context.resume();
+  if (!context || context.state === 'closed') {
+    context = new AudioContextClass();
   }
+
+  wakeAudio();
+}
+
+// A call, the lock screen or another app's sound leaves the context "suspended", or "interrupted" on
+// iOS; either way it stays silent until resumed.
+function wakeAudio() {
+  if (context && context.state !== 'running' && context.state !== 'closed') {
+    return context.resume().catch(() => {});
+  }
+
+  return Promise.resolve();
 }
 
 // A sine with a quarter of the octave above mixed in to carry outdoors, and a 6 ms fade at each end
@@ -75,15 +85,22 @@ const VIBRATIONS = {
 export function signal(name, { sound }) {
   navigator.vibrate?.(VIBRATIONS[name]);
 
-  if (!sound || !context || context.state !== 'running') {
+  if (!sound || !context) {
     return;
   }
 
-  const now = context.currentTime;
+  // A run goes on by itself, with no tap to wake the sound after an interruption: each beep does.
+  wakeAudio().then(() => {
+    if (context.state !== 'running') {
+      return;
+    }
 
-  for (const [frequency, offset, duration] of SOUNDS[name]) {
-    tone(frequency, now + offset, duration);
-  }
+    const now = context.currentTime;
+
+    for (const [frequency, offset, duration] of SOUNDS[name]) {
+      tone(frequency, now + offset, duration);
+    }
+  });
 }
 
 export const wakeLockSupported = 'wakeLock' in navigator;
@@ -119,6 +136,10 @@ async function acquire() {
 }
 
 document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    wakeAudio();
+  }
+
   if (wanted) {
     acquire();
   }

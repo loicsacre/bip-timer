@@ -269,10 +269,15 @@ button:focus-visible {
   color: var(--text-secondary);
 }
 
-.fields {
+/* On a phone the intro, the templates and the settings scroll as one, between the fixed header and
+   the start button. */
+.scroll {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+}
+
+.fields {
   padding: 0 20px;
 }
 
@@ -440,6 +445,93 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+}
+
+.summary strong {
+  margin-left: auto;
+}
+
+.share {
+  position: relative;
+  flex: none;
+  width: 40px;
+  height: 32px;
+  border: 1px solid var(--control-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share::after {
+  content: '';
+  position: absolute;
+  inset: -6px -2px;
+}
+
+/* Where there is no share sheet, the button says the link is on the clipboard. */
+.share[data-feedback]::before {
+  content: attr(data-feedback);
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  padding: 6px 10px;
+  white-space: nowrap;
+  background: var(--selected);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* The templates run along one line and scroll sideways on a phone rather than taking rows. */
+.picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 20px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.picker::-webkit-scrollbar {
+  display: none;
+}
+
+.picker .mono {
+  flex: none;
+  margin-right: 4px;
+}
+
+.picker a {
+  flex: none;
+  height: 36px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--control-line);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.picker a[aria-current='page'] {
+  background: var(--selected);
+  color: var(--ink);
+}
+
+.intro-title {
+  padding: 14px 20px 0;
+  font-size: 26px;
+  line-height: 1.05;
+}
+
+.intro-title + .intro {
+  padding-top: 6px;
 }
 
 .summary .mono {
@@ -583,6 +675,29 @@ button:focus-visible {
 
 .guide .faq p {
   color: var(--text-secondary);
+}
+
+.guide .formats nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.guide .formats a {
+  min-height: 44px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--control-line);
+  color: var(--text);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.guide .formats a[aria-current='page'] {
+  background: var(--selected);
+  color: var(--ink);
 }
 
 .guide > .display {
@@ -969,7 +1084,8 @@ button > * {
 
 /* Narrow phones: the help button keeps only its mark so the language switch fits. */
 @media (max-width: 399px) {
-  .help-button .label {
+  .help-button .label,
+  .summary > .mono {
     display: none;
   }
 }
@@ -1000,8 +1116,41 @@ button > * {
     padding: 0;
   }
 
-  .setup .intro {
+  .setup .scroll {
+    display: contents;
+  }
+
+  .setup .lede {
     grid-area: intro;
+  }
+
+  .setup .picker {
+    flex-wrap: wrap;
+    padding: 24px 0 0;
+    overflow: visible;
+  }
+
+  .setup .picker .mono {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .setup .intro-title {
+    padding: 48px 0 0;
+    font-size: clamp(32px, 6.5dvh, 60px);
+  }
+
+  .setup .intro-title + .intro {
+    padding-top: 16px;
+    max-width: 34ch;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: clamp(16px, 2.6dvh, 22px);
+    line-height: 1.45;
+    color: var(--text-secondary);
+  }
+
+  .setup .intro {
     padding: 48px 0 0;
     max-width: 24ch;
     font-family: var(--display);
@@ -1017,6 +1166,8 @@ button > * {
 
   .setup .fields {
     grid-area: fields;
+    min-height: 0;
+    overflow-y: auto;
     align-self: center;
     max-height: 100%;
     padding: 24px 0;
@@ -1341,5 +1492,20 @@ button > * {
 
   .setup .primary {
     height: 60px;
+  }
+}
+
+/* Phones: the fixed bottom gives back some height to the settings. */
+@media (max-width: 899px) {
+  .setup .timeline {
+    margin-top: 10px;
+  }
+
+  .setup .summary {
+    height: 40px;
+  }
+
+  .setup .primary {
+    height: 64px;
   }
 }

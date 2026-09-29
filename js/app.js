@@ -1,24 +1,12 @@
-import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
+import { SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
 import { track } from './analytics.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
+import { FIELDS, OWN_VALUES, clamp, normalized, ownValues, sanitize, varies, withoutOwnValues } from './settings.js';
+import { settingsFromQuery, settingsToQuery } from './share.js';
 
 const STORAGE_KEY = 'bip-timer-settings';
-
-const FIELDS = {
-  exercises: { min: 1, max: 30, step: 1, type: 'count' },
-  rounds: { min: 1, max: 99, step: 1, type: 'count' },
-  prep: { min: 0, max: 120, step: 5, type: 'seconds' },
-  effort: { min: 5, max: 600, step: 5, type: 'seconds' },
-  reps: { min: 1, max: 200, step: 1, type: 'reps' },
-  recExercise: { min: 0, max: 600, step: 5, type: 'seconds' },
-  recRound: { min: 0, max: 600, step: 5, type: 'seconds' },
-  recSet: { min: 0, max: 600, step: 5, type: 'seconds' },
-};
-
-// The settings that can also be given per exercise, and where those values are kept.
-const OWN_VALUES = { effort: 'exerciseEfforts', reps: 'exerciseReps' };
 
 const PHASE_COLORS = { prep: 'var(--phase-prep)', effort: 'var(--phase-effort)', recovery: 'var(--phase-recovery)' };
 
@@ -27,8 +15,11 @@ const HOLD_INTERVAL = 90;
 
 const app = document.getElementById('app');
 
+// A format page (Tabata, HIIT…) describes itself: its heading, its intro and the block it sets.
+const page = JSON.parse(app.dataset.page ?? 'null');
+
 const state = {
-  settings: loadSettings(),
+  settings: initialSettings(),
   screen: 'setup',
   help: false,
   confirm: false,
@@ -40,77 +31,34 @@ const state = {
   perExercise: false,
 };
 
+saveSettings();
+
 function loadSettings() {
-  const settings = { ...DEFAULT_SETTINGS, sound: true };
-
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null');
-
-    if (saved && typeof saved === 'object') {
-      for (const [key, field] of Object.entries(FIELDS)) {
-        if (Number.isFinite(saved[key])) {
-          settings[key] = clamp(Math.round(saved[key]), field);
-        }
-      }
-
-      if (saved.structure === 'circuit' || saved.structure === 'series') {
-        settings.structure = saved.structure;
-      }
-
-      if (saved.unit === 'time' || saved.unit === 'reps') {
-        settings.unit = saved.unit;
-      }
-
-      if (typeof saved.sound === 'boolean') {
-        settings.sound = saved.sound;
-      }
-
-      for (const [key, list] of Object.entries(OWN_VALUES)) {
-        if (Array.isArray(saved[list])) {
-          settings[list] = saved[list]
-            .slice(0, FIELDS.exercises.max)
-            .map((value) => (Number.isFinite(value) ? clamp(Math.round(value), FIELDS[key]) : settings[key]));
-        }
-      }
-    }
+    return sanitize(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null'));
   } catch {
     // A private window or blocked storage starts from the defaults.
+    return sanitize(null);
+  }
+}
+
+// What the page brings on top of the last setup: a format page sets its block, and a shared link
+// sets the session it describes, then leaves the address so a reload keeps the user's changes.
+function initialSettings() {
+  let settings = loadSettings();
+
+  if (page?.settings) {
+    settings = sanitize(page.settings, withoutOwnValues(settings));
   }
 
-  return normalized(settings);
-}
+  const shared = settingsFromQuery(location.search, settings);
 
-function ownValues(settings, key) {
-  return Array.from({ length: settings.exercises }, (_, index) => exerciseValue(settings, key, index));
-}
-
-function varies(settings, key) {
-  const values = ownValues(settings, key);
-
-  return values.some((value) => value !== values[0]);
-}
-
-// Values for exercises that no longer exist are dropped, and a list where every exercise ends up
-// equal folds back into the block's value, so no hidden base can surprise the next exercise added.
-function normalized(settings) {
-  const next = { ...settings };
-
-  for (const [key, list] of Object.entries(OWN_VALUES)) {
-    if (!next[list]) {
-      continue;
-    }
-
-    next[list] = next[list].slice(0, next.exercises);
-
-    if (varies(next, key)) {
-      continue;
-    }
-
-    next[key] = exerciseValue(next, key, 0);
-    delete next[list];
+  if (shared) {
+    settings = shared;
+    history.replaceState(null, '', location.pathname);
   }
 
-  return next;
+  return settings;
 }
 
 function saveSettings() {
@@ -119,10 +67,6 @@ function saveSettings() {
   } catch {
     // Not remembering the setup is acceptable.
   }
-}
-
-function clamp(value, field) {
-  return Math.min(field.max, Math.max(field.min, value));
 }
 
 function clock(seconds) {
@@ -272,15 +216,31 @@ function timeline(settings) {
   return `<div class="timeline${steps.length > 60 ? ' dense' : ''}" aria-hidden="true">${segments}</div>`;
 }
 
-function brandbar(right) {
+// The brand is the page's heading, except on a format page whose heading is the format's name.
+function brandbar(right, tag = 'h1') {
   return `
     <header class="brandbar">
-      <h1 class="brand"><span class="display">BIP</span><span class="mono">${t.title}</span></h1>
+      <${tag} class="brand"><span class="display">BIP</span><span class="mono">${t.title}</span></${tag}>
       ${right}
     </header>`;
 }
 
+const SHARE_ICON = '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11M6 6l4-4 4 4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10v8h12v-8" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+
 const PLAY_ICON = '<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><polygon points="4,2 20,11 4,20" fill="currentColor"/></svg>';
+
+// One tap to a ready-made block: each template is its own page, so these are plain links.
+function picker() {
+  if (!page?.picker) {
+    return '';
+  }
+
+  const links = page.picker.links
+    .map(({ label, href, current }) => `<a href="${href}"${current ? ' aria-current="page"' : ''}>${label}</a>`)
+    .join('');
+
+  return `<nav class="picker" aria-label="${page.picker.label}"><span class="mono">${page.picker.label}</span>${links}</nav>`;
+}
 
 function renderSetup() {
   const settings = state.settings;
@@ -299,8 +259,13 @@ function renderSetup() {
 
   return `
     <section class="screen setup">
-      ${brandbar(tools)}
-      <p class="intro">${t.intro} <button type="button" class="inline-link" data-action="help">${t.howItWorks}</button></p>
+      ${brandbar(tools, page?.heading ? 'div' : 'h1')}
+      <div class="scroll">
+      <div class="lede">
+        ${page?.heading ? `<h1 class="display intro-title">${page.heading}</h1>` : ''}
+        <p class="intro">${page?.intro ?? t.intro} <button type="button" class="inline-link" data-action="help">${t.howItWorks}</button></p>
+        ${picker()}
+      </div>
       <div class="fields">
         <div class="field choice">
           <div class="caption"><span class="mono">${t.structure}</span><span class="hint">${circuit ? t.circuitHint : t.seriesHint}</span></div>
@@ -316,9 +281,13 @@ function renderSetup() {
           ${segmented('sound', [[true, t.on], [false, t.off]])}
         </div>
       </div>
+      </div>
       <footer class="launch">
         ${timeline(settings)}
-        <div class="summary"><span class="mono">${t.summary}</span><strong>${summary(settings)}</strong></div>
+        <div class="summary">
+          <span class="mono">${t.summary}</span><strong>${summary(settings)}</strong>
+          <button type="button" class="share" data-action="share" aria-label="${t.share}">${SHARE_ICON}</button>
+        </div>
         ${wakeLockSupported ? '' : `<p class="notice">${t.noWakeLock}</p>`}
         <button type="button" class="primary" data-action="start">${PLAY_ICON}<span class="display">${t.start}</span></button>
       </footer>
@@ -554,7 +523,8 @@ function renderEnd() {
 
 // Rendering keeps the setup list's scroll and the focused control across a redraw.
 function render() {
-  const scrollTop = app.querySelector('.fields')?.scrollTop;
+  // A phone scrolls the intro and the settings together; a wide screen scrolls the settings alone.
+  const scrolled = ['.scroll', '.fields'].map((selector) => [selector, app.querySelector(selector)?.scrollTop]);
   const focused = document.activeElement?.closest?.('[data-action], [data-step]');
   const focusKey = focused ? focusSelector(focused) : null;
 
@@ -568,10 +538,12 @@ function render() {
     app.innerHTML = renderEnd();
   }
 
-  const fields = app.querySelector('.fields');
+  for (const [selector, top] of scrolled) {
+    const element = app.querySelector(selector);
 
-  if (fields && scrollTop) {
-    fields.scrollTop = scrollTop;
+    if (element && top) {
+      element.scrollTop = top;
+    }
   }
 
   if (focusKey) {
@@ -806,6 +778,31 @@ function showGuide(open) {
   }
 }
 
+// The phone's own share sheet where there is one; elsewhere the link is copied, and the button says so.
+async function shareSession(button) {
+  const url = `${location.origin}${location.pathname}?${settingsToQuery(state.settings)}`;
+
+  track('share');
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'BIP Timer', text: t.shareText, url });
+    } catch {
+      // Closing the share sheet is not an error.
+    }
+
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(url);
+    button.dataset.feedback = t.copied;
+    setTimeout(() => delete button.dataset.feedback, 2000);
+  } catch {
+    window.prompt(t.share, url);
+  }
+}
+
 const ACTIONS = {
   help: () => showGuide(true),
   'close-help': () => showGuide(false),
@@ -825,13 +822,17 @@ const ACTIONS = {
     delete next[OWN_VALUES[next.unit === 'reps' ? 'reps' : 'effort']];
     applySettings(next);
   },
+  share: (button) => shareSession(button),
   language: (button) => {
     if (button.dataset.value === lang) {
       return;
     }
 
+    // The same page in the other language, as the page's own alternates list it.
+    const alternate = document.querySelector(`link[rel="alternate"][hreflang="${button.dataset.value}"]`);
+
     setLanguage(button.dataset.value);
-    location.href = new URL(`../${button.dataset.value}/`, import.meta.url).href;
+    location.href = alternate ? new URL(alternate.href).pathname : new URL(`../${button.dataset.value}/`, import.meta.url).href;
   },
   start,
   settings: () => {

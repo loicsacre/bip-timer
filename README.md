@@ -26,8 +26,9 @@ dependencies).
 
 ## Pages and preview images
 
-The root `index.html`, the three language pages, `sitemap.xml` and `robots.txt` are generated: edit
-`tools/pages.mjs` (titles, descriptions, site address) or the strings in `js/i18n.js`, then run
+The root `index.html`, the three language pages, the format pages, `sitemap.xml` and `robots.txt` are generated:
+edit `tools/pages.mjs` (titles, descriptions, site address), `tools/presets.mjs` (format pages) or the strings in
+`js/i18n.js`, then run
 
 ```bash
 npm run pages
@@ -60,6 +61,9 @@ The iPhone silent switch mutes the beeps, and the sound mixes with music already
 - `js/app.js`: the four screens (setup, help, session, end), in one column on a phone and two on a wide screen.
 - `js/i18n.js`: French, English and Dutch; each has its own page, the root picks one from the browser languages.
 - `js/guide.js`: the how-to, written into each page by the generator; the help button reveals it.
+- `js/settings.js`: the setup's bounds and validation, applied to storage, format pages and shared links alike.
+- `js/share.js`: a session written into the address and read back (`?structure=circuit&unit=time&exercises=4…`).
+- `tools/presets.mjs`: the format pages (Tabata, HIIT, circuit training, 30/30, strength by sets) in each language.
 - `js/analytics.js`: anonymous counts sent to GoatCounter (https://biptimer.goatcounter.com): page views, sessions
   started and finished per format (`session-start/circuit-time`…), installs. No cookie, nothing personal; localhost is
   never counted.

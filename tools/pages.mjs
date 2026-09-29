@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url';
 import { guideSections } from '../js/guide.js';
 import { LANGUAGES, STRINGS } from '../js/i18n.js';
 
+import { FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL } from './presets.mjs';
+
 // The only place the address lives: change it here when the site moves to its own domain.
 export const SITE = 'https://biptimer.app/';
 
@@ -40,13 +42,13 @@ const META = {
   },
 };
 
-const url = (code) => `${SITE}${code}/`;
-
-const alternates = () =>
-  [
-    ...LANGUAGES.map((code) => `    <link rel="alternate" hreflang="${code}" href="${url(code)}" />`),
-    `    <link rel="alternate" hreflang="x-default" href="${SITE}" />`,
+// Each page lists the same page in every language; `fallback` is where any other language goes.
+function alternates(paths, fallback) {
+  return [
+    ...LANGUAGES.map((code) => `    <link rel="alternate" hreflang="${code}" href="${SITE}${paths[code]}" />`),
+    `    <link rel="alternate" hreflang="x-default" href="${SITE}${fallback}" />`,
   ].join('\n');
+}
 
 function sharing({ address, title, description, image, imageAlt, locale }) {
   return `    <meta property="og:type" content="website" />
@@ -66,14 +68,14 @@ function sharing({ address, title, description, image, imageAlt, locale }) {
     <meta name="twitter:image:alt" content="${imageAlt}" />`;
 }
 
-function head({ root, title, description, address }) {
+function head({ root, title, description, address, links }) {
   return `    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0e0d0b" />
     <title>${title}</title>
     <meta name="description" content="${description}" />
     <link rel="canonical" href="${address}" />
-${alternates()}
+${links}
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -93,10 +95,35 @@ const website = {
   url: SITE,
 };
 
-function languagePage(code) {
+const mainPath = (code) => `${code}/`;
+const presetPath = (code, preset) => `${code}/${preset[code].slug}/`;
+
+const THIS_FORMAT = { fr: 'CE FORMAT', en: 'THIS FORMAT', nl: 'DIT FORMAT' };
+
+// Every page links to every format and to the free setup, so each can be reached and ranked.
+function formatsSection(code, current) {
+  const link = (path, label) =>
+    path === current ? `<a href="/${path}" aria-current="page">${label}</a>` : `<a href="/${path}">${label}</a>`;
+  const items = [
+    link(mainPath(code), FREE_SETUP_LABEL[code]),
+    ...PRESETS.map((preset) => link(presetPath(code, preset), preset[code].heading)),
+  ];
+
+  return `<section class="formats"><h3 class="mono">${PRESETS_LABEL[code]}</h3><nav>${items.join('')}</nav></section>`;
+}
+
+// The page data is JSON inside a single-quoted attribute: only & and ' need escaping.
+const attribute = (value) => JSON.stringify(value).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
+
+function languagePage(code, preset = null) {
   const t = STRINGS[code];
-  const meta = META[code];
-  const address = url(code);
+  const format = preset?.[code];
+  const path = preset ? presetPath(code, preset) : mainPath(code);
+  const root = preset ? '../../' : '../';
+  const address = `${SITE}${path}`;
+  const meta = { ...META[code], ...(format && { title: format.title, description: format.description }) };
+  const paths = Object.fromEntries(LANGUAGES.map((other) => [other, preset ? presetPath(other, preset) : mainPath(other)]));
+  const links = alternates(paths, preset ? paths.en : '');
   const application = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
@@ -110,21 +137,35 @@ function languagePage(code) {
     image: `${SITE}${meta.image}`,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
   };
+  const picker = {
+    label: PICKER_LABEL[code],
+    links: [
+      { label: FREE_CHIP[code], href: `/${mainPath(code)}` },
+      ...PRESETS.map((other) => ({ label: other[code].chip, href: `/${presetPath(code, other)}` })),
+    ].map((link) => ({ ...link, current: link.href === `/${path}` })),
+  };
+  const data = ` data-page='${attribute({ picker, ...(format && { heading: format.heading, intro: format.intro, settings: preset.settings }) })}'`;
+  const lead = format
+    ? `<h2 class="display">${format.heading}</h2>
+        <p class="lead">${format.intro}</p>
+        <section><h3 class="mono">${THIS_FORMAT[code]}</h3>${format.body.map((text) => `<p>${text}</p>`).join('')}</section>`
+    : `<h2 class="display">${t.guideTitle}</h2>
+        <p class="lead">${t.guideIntro}</p>`;
 
   return `<!doctype html>
 <html lang="${code}">
   <head>
-${head({ root: '../', title: meta.title, description: meta.description, address })}
+${head({ root, title: meta.title, description: meta.description, address, links })}
 ${sharing({ address, ...meta })}
     <script type="application/ld+json">${JSON.stringify([website, application])}</script>
-    <link rel="preload" href="../fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preload" href="${root}fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="${root}css/style.css" />
     <script data-goatcounter="https://biptimer.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   </head>
   <body>
-    <main id="app">
-      <h1>BIP Timer</h1>
-      <p>${t.intro}</p>
+    <main id="app"${data}>
+      <h1>${format ? format.heading : 'BIP Timer'}</h1>
+      <p>${format ? format.intro : t.intro}</p>
     </main>
     <article id="guide" class="screen help" role="dialog" aria-modal="true" aria-labelledby="guide-title" hidden>
       <header class="brandbar">
@@ -132,13 +173,13 @@ ${sharing({ address, ...meta })}
         <button type="button" class="close" data-action="close-help" aria-label="${t.close}"><i></i><i></i></button>
       </header>
       <div class="body guide">
-        <h2 class="display">${t.guideTitle}</h2>
-        <p class="lead">${t.guideIntro}</p>
+        ${lead}
+        ${formatsSection(code, path)}
         ${guideSections(t, 3)}
       </div>
       <div class="foot"><button type="button" class="secondary" data-action="close-help">${t.backToSetup}</button></div>
     </article>
-    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="${root}js/app.js"></script>
   </body>
 </html>
 `;
@@ -148,11 +189,12 @@ ${sharing({ address, ...meta })}
 function chooserPage() {
   const meta = META.fr;
   const links = LANGUAGES.map((code) => `<a href="${code}/" hreflang="${code}" lang="${code}">${META[code].name}</a>`).join('\n        ');
+  const paths = Object.fromEntries(LANGUAGES.map((code) => [code, mainPath(code)]));
 
   return `<!doctype html>
 <html lang="fr">
   <head>
-${head({ root: '', title: 'BIP Timer · Minuteur d’intervalles · Interval timer', description: meta.description, address: SITE })}
+${head({ root: '', title: 'BIP Timer · Minuteur d’intervalles · Interval timer', description: meta.description, address: SITE, links: alternates(paths, '') })}
 ${sharing({ address: SITE, ...meta })}
     <style>
       body { margin: 0; min-height: 100dvh; display: grid; place-content: center; gap: 16px; background: #0e0d0b; color: #eae6dd; font: 16px system-ui, sans-serif; text-align: center; }
@@ -177,18 +219,29 @@ ${sharing({ address: SITE, ...meta })}
 }
 
 function sitemap() {
-  const links = LANGUAGES.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${url(code)}" />`).join('\n');
-  const entries = LANGUAGES.map(
-    (code) => `  <url>
-    <loc>${url(code)}</loc>
+  const groups = [
+    { paths: Object.fromEntries(LANGUAGES.map((code) => [code, mainPath(code)])), fallback: '' },
+    ...PRESETS.map((preset) => {
+      const paths = Object.fromEntries(LANGUAGES.map((code) => [code, presetPath(code, preset)]));
+
+      return { paths, fallback: paths.en };
+    }),
+  ];
+  const entries = groups.flatMap(({ paths, fallback }) => {
+    const links = [
+      ...LANGUAGES.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${SITE}${paths[code]}" />`),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${fallback}" />`,
+    ].join('\n');
+
+    return LANGUAGES.map((code) => `  <url>
+    <loc>${SITE}${paths[code]}</loc>
 ${links}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}" />
-  </url>`,
-  ).join('\n');
+  </url>`);
+  });
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${entries}
+${entries.join('\n')}
 </urlset>
 `;
 }
@@ -197,6 +250,9 @@ export function pages() {
   return {
     'index.html': chooserPage(),
     ...Object.fromEntries(LANGUAGES.map((code) => [`${code}/index.html`, languagePage(code)])),
+    ...Object.fromEntries(
+      PRESETS.flatMap((preset) => LANGUAGES.map((code) => [`${presetPath(code, preset)}index.html`, languagePage(code, preset)])),
+    ),
     'sitemap.xml': sitemap(),
     'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
   };

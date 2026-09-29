@@ -21,4 +21,109 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/" />
   </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-tabata/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-tabata/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/tabata-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/tabata-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-tabata/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/tabata-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/tabata-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-tabata/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/tabata-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/tabata-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-hiit/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-hiit/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/hiit-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/hiit-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-hiit/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/hiit-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/hiit-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-hiit/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/hiit-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/hiit-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-circuit-training/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-circuit-training/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/circuit-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/circuittraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/circuit-training-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/circuit-training-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-circuit-training/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/circuit-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/circuittraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/circuit-training-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/circuittraining-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-circuit-training/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/circuit-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/circuittraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/circuit-training-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-fractionne/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-fractionne/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/running-interval-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/intervaltraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/running-interval-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/running-interval-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-fractionne/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/running-interval-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/intervaltraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/running-interval-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/intervaltraining-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-fractionne/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/running-interval-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/intervaltraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/running-interval-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-musculation/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-musculation/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/strength-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/krachttraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/strength-training-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/strength-training-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-musculation/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/strength-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/krachttraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/strength-training-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/krachttraining-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-musculation/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/strength-training-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/krachttraining-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/strength-training-timer/" />
+  </url>
 </urlset>

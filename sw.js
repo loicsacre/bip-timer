@@ -1,7 +1,7 @@
 // Serves the app from the cache so it opens offline, and refreshes the cache in the background:
 // a new version shows on the launch after the one that fetched it. Bump VERSION when a file is
 // added or removed.
-const VERSION = 'bip-timer-v12';
+const VERSION = 'bip-timer-v15';
 
 const FILES = [
   './',
@@ -16,6 +16,8 @@ const FILES = [
   'js/device.js',
   'js/i18n.js',
   'js/run.js',
+  'js/settings.js',
+  'js/share.js',
   'js/sequence.js',
   'fonts/Archivo-Medium.woff2',
   'fonts/SairaCondensed-Bold.woff2',

@@ -1,4 +1,4 @@
-const STRINGS = {
+export const STRINGS = {
   fr: {
     title: 'TIMER',
     help: 'AIDE',
@@ -294,7 +294,7 @@ const LANGUAGE_KEY = 'bip-timer-language';
 export const LANGUAGES = ['fr', 'en', 'nl'];
 
 // A language picked by hand wins; otherwise the first of the browser's languages we speak.
-function detect() {
+export function preferredLanguage() {
   try {
     const saved = localStorage.getItem(LANGUAGE_KEY);
 
@@ -305,7 +305,9 @@ function detect() {
     // Blocked storage falls back to the browser's languages.
   }
 
-  for (const tag of navigator.languages ?? [navigator.language]) {
+  const tags = typeof navigator === 'undefined' ? [] : (navigator.languages ?? [navigator.language]);
+
+  for (const tag of tags) {
     const code = (tag ?? '').slice(0, 2).toLowerCase();
 
     if (STRINGS[code]) {
@@ -316,7 +318,10 @@ function detect() {
   return 'en';
 }
 
-export let lang = detect();
+// Each language has its own page, so the page says which one it is; the page generator has none.
+const pageLanguage = typeof document === 'undefined' ? 'en' : document.documentElement.lang;
+
+export let lang = STRINGS[pageLanguage] ? pageLanguage : preferredLanguage();
 
 export let t = STRINGS[lang];
 

@@ -1,0 +1,193 @@
+// Writes one page per language, the language chooser at the root, the sitemap and robots.txt.
+// Run `npm run pages` after changing a string, the site address or this file.
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { guideSections } from '../js/guide.js';
+import { LANGUAGES, STRINGS } from '../js/i18n.js';
+
+// The only place the address lives: change it here when the site moves to its own domain.
+export const SITE = 'https://biptimer.app/';
+
+const META = {
+  fr: {
+    locale: 'fr_FR',
+    name: 'Français',
+    title: 'BIP Timer · Minuteur d’intervalles gratuit : HIIT, circuit, séries',
+    description:
+      'Minuteur d’intervalles pour un bloc complet : exercices, tours et récupérations. Réglé en dix secondes, lancé en un tap. Sans installation, hors ligne.',
+    image: 'og-image.png',
+    imageAlt: 'Le logo BIP Timer et l’aperçu coloré d’une séance',
+  },
+  en: {
+    locale: 'en_GB',
+    name: 'English',
+    title: 'BIP Timer · Free interval timer: HIIT, circuit, sets',
+    description:
+      'Interval timer for a whole block: exercises, rounds and rests. Set in ten seconds, started in one tap. No install, works offline.',
+    image: 'og-image-en.png',
+    imageAlt: 'The BIP Timer logo and a colour preview of a session',
+  },
+  nl: {
+    locale: 'nl_BE',
+    name: 'Nederlands',
+    title: 'BIP Timer · Gratis intervaltimer: HIIT, circuit, reeksen',
+    description:
+      'Intervaltimer voor een volledig blok: oefeningen, rondes en rust. Ingesteld in tien seconden, gestart met één tik. Zonder installatie, werkt offline.',
+    image: 'og-image-nl.png',
+    imageAlt: 'Het BIP Timer-logo en een kleurrijk overzicht van een sessie',
+  },
+};
+
+const url = (code) => `${SITE}${code}/`;
+
+const alternates = () =>
+  [
+    ...LANGUAGES.map((code) => `    <link rel="alternate" hreflang="${code}" href="${url(code)}" />`),
+    `    <link rel="alternate" hreflang="x-default" href="${SITE}" />`,
+  ].join('\n');
+
+function sharing({ address, title, description, image, imageAlt, locale }) {
+  return `    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BIP Timer" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:url" content="${address}" />
+    <meta property="og:image" content="${SITE}${image}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${imageAlt}" />
+    <meta property="og:locale" content="${locale}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${SITE}${image}" />
+    <meta name="twitter:image:alt" content="${imageAlt}" />`;
+}
+
+function head({ root, title, description, address }) {
+  return `    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0e0d0b" />
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
+    <link rel="canonical" href="${address}" />
+${alternates()}
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="BIP Timer" />
+    <link rel="manifest" href="${root}manifest.webmanifest" />
+    <link rel="icon" href="${root}icons/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="${root}icons/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="${root}icons/apple-touch-icon.png" />`;
+}
+
+function languagePage(code) {
+  const t = STRINGS[code];
+  const meta = META[code];
+  const address = url(code);
+  const application = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'BIP Timer',
+    url: address,
+    description: meta.description,
+    inLanguage: code,
+    applicationCategory: 'SportsApplication',
+    operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript',
+    image: `${SITE}${meta.image}`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  };
+
+  return `<!doctype html>
+<html lang="${code}">
+  <head>
+${head({ root: '../', title: meta.title, description: meta.description, address })}
+${sharing({ address, ...meta })}
+    <script type="application/ld+json">${JSON.stringify(application)}</script>
+    <link rel="preload" href="../fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <h1>BIP Timer</h1>
+      <p>${t.intro}</p>
+    </main>
+    <article id="guide" hidden>
+      <h2>${t.helpTitle}</h2>
+      ${guideSections(t)}
+    </article>
+    <script type="module" src="../js/app.js"></script>
+  </body>
+</html>
+`;
+}
+
+// The root sends each visitor to their language; without JavaScript it is a list of links.
+function chooserPage() {
+  const meta = META.fr;
+  const links = LANGUAGES.map((code) => `<a href="${code}/" hreflang="${code}" lang="${code}">${META[code].name}</a>`).join('\n        ');
+
+  return `<!doctype html>
+<html lang="fr">
+  <head>
+${head({ root: '', title: 'BIP Timer · Minuteur d’intervalles · Interval timer', description: meta.description, address: SITE })}
+${sharing({ address: SITE, ...meta })}
+    <style>
+      body { margin: 0; min-height: 100dvh; display: grid; place-content: center; gap: 16px; background: #0e0d0b; color: #eae6dd; font: 16px system-ui, sans-serif; text-align: center; }
+      nav { display: flex; gap: 24px; justify-content: center; }
+      a { color: inherit; }
+    </style>
+    <script type="module">
+      import { preferredLanguage } from './js/i18n.js';
+
+      location.replace(\`\${preferredLanguage()}/\${location.search}\`);
+    </script>
+  </head>
+  <body>
+    <h1>BIP Timer</h1>
+    <nav>
+        ${links}
+    </nav>
+  </body>
+</html>
+`;
+}
+
+function sitemap() {
+  const links = LANGUAGES.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${url(code)}" />`).join('\n');
+  const entries = LANGUAGES.map(
+    (code) => `  <url>
+    <loc>${url(code)}</loc>
+${links}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}" />
+  </url>`,
+  ).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries}
+</urlset>
+`;
+}
+
+export function pages() {
+  return {
+    'index.html': chooserPage(),
+    ...Object.fromEntries(LANGUAGES.map((code) => [`${code}/index.html`, languagePage(code)])),
+    'sitemap.xml': sitemap(),
+    'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
+  };
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+  for (const [path, content] of Object.entries(pages())) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    writeFileSync(join(root, path), content);
+  }
+}

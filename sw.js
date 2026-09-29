@@ -1,21 +1,25 @@
 // Serves the app from the cache so it opens offline, and refreshes the cache in the background:
 // a new version shows on the launch after the one that fetched it. Bump VERSION when a file is
 // added or removed.
-const VERSION = 'bip-timer-v8';
+const VERSION = 'bip-timer-v9';
 
 const FILES = [
   './',
   'index.html',
+  'fr/',
+  'en/',
+  'nl/',
   'manifest.webmanifest',
   'css/style.css',
   'js/app.js',
+  'js/guide.js',
   'js/device.js',
   'js/i18n.js',
   'js/run.js',
   'js/sequence.js',
-  'fonts/Archivo-Medium.ttf',
-  'fonts/SairaCondensed-Bold.ttf',
-  'fonts/IBMPlexMono-Medium.ttf',
+  'fonts/Archivo-Medium.woff2',
+  'fonts/SairaCondensed-Bold.woff2',
+  'fonts/IBMPlexMono-Medium.woff2',
   'icons/icon-192.png',
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',

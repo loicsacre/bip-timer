@@ -1,6 +1,7 @@
 import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
+import { guideSections } from './guide.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
 
 const STORAGE_KEY = 'bip-timer-settings';
@@ -38,8 +39,6 @@ const state = {
   sessionView: null,
   perExercise: false,
 };
-
-document.documentElement.lang = lang;
 
 function loadSettings() {
   const settings = { ...DEFAULT_SETTINGS, sound: true };
@@ -276,7 +275,7 @@ function timeline(settings) {
 function brandbar(right) {
   return `
     <header class="brandbar">
-      <div class="brand"><span class="display">BIP</span><span class="mono">${t.title}</span></div>
+      <h1 class="brand"><span class="display">BIP</span><span class="mono">${t.title}</span></h1>
       ${right}
     </header>`;
 }
@@ -328,29 +327,13 @@ function renderSetup() {
 }
 
 function renderHelp() {
-  const swatches = [
-    ['--phase-prep', t.swatchPrep],
-    ['--phase-effort', t.swatchEffort],
-    ['--phase-recovery', t.swatchRecovery],
-  ]
-    .map(([color, label]) => `<div class="swatch"><i style="background: var(${color})"></i>${label}</div>`)
-    .join('');
-
-  const sections = t.helpSections
-    .map(([title, paragraphs, after]) => {
-      const body = paragraphs ? paragraphs.map((text) => `<p>${text}</p>`).join('') : `<div class="stack">${swatches}</div>`;
-
-      return `<section><span class="mono">${title}</span>${body}${after ? `<p>${after}</p>` : ''}</section>`;
-    })
-    .join('');
-
   return `
     <div class="screen help" role="dialog" aria-modal="true" aria-label="${t.helpTitle}">
       <header class="brandbar">
         <span class="display" style="font-size: 32px">${t.helpTitle}</span>
         <button type="button" class="close" data-action="close-help" aria-label="${t.close}"><i></i><i></i></button>
       </header>
-      <div class="body">${sections}</div>
+      <div class="body">${guideSections(t)}</div>
       <div class="foot"><button type="button" class="secondary" data-action="close-help">${t.backToSetup}</button></div>
     </div>`;
 }
@@ -833,9 +816,12 @@ const ACTIONS = {
     applySettings(next);
   },
   language: (button) => {
+    if (button.dataset.value === lang) {
+      return;
+    }
+
     setLanguage(button.dataset.value);
-    document.documentElement.lang = lang;
-    render();
+    location.href = new URL(`../${button.dataset.value}/`, import.meta.url).href;
   },
   start,
   settings: () => {
@@ -951,5 +937,5 @@ document.addEventListener('touchstart', () => {}, { passive: true });
 render();
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.register(new URL('../sw.js', import.meta.url)).catch(() => {});
 }

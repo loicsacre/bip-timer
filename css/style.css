@@ -1,20 +1,20 @@
 @font-face {
   font-family: 'Archivo';
-  src: url('../fonts/Archivo-Medium.ttf') format('truetype');
+  src: url('../fonts/Archivo-Medium.woff2') format('woff2');
   font-weight: 400 600;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Saira Condensed';
-  src: url('../fonts/SairaCondensed-Bold.ttf') format('truetype');
+  src: url('../fonts/SairaCondensed-Bold.woff2') format('woff2');
   font-weight: 600 800;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('../fonts/IBMPlexMono-Medium.ttf') format('truetype');
+  src: url('../fonts/IBMPlexMono-Medium.woff2') format('woff2');
   font-weight: 400 600;
   font-display: swap;
 }
@@ -69,6 +69,12 @@ body {
   -webkit-user-select: none;
 }
 
+/* Headings are there for structure and search engines; their look comes from their classes. */
+h1,
+h2 {
+  font: inherit;
+}
+
 button {
   font: inherit;
   color: inherit;
@@ -87,6 +93,12 @@ button:active:not(:disabled) {
 button:focus-visible {
   outline: 3px solid var(--info);
   outline-offset: -3px;
+}
+
+/* The page's own text, for search engines and browsers without JavaScript, until the app draws. */
+#app > h1,
+#app > p {
+  visibility: hidden;
 }
 
 #app {

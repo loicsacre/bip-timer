@@ -2,6 +2,7 @@ export const STRINGS = {
   fr: {
     title: 'TIMER',
     help: 'AIDE',
+    howItWorks: 'Comment ça marche ?',
     language: 'Langue',
     intro: 'Minuteur d’intervalles pour un bloc complet : exercices, tours et récupérations. Règle, puis démarre.',
     structure: 'STRUCTURE',
@@ -118,6 +119,7 @@ export const STRINGS = {
   en: {
     title: 'TIMER',
     help: 'HELP',
+    howItWorks: 'How does it work?',
     language: 'Language',
     intro: 'Interval timer for a whole block: exercises, rounds and rests. Set it, then start.',
     structure: 'STRUCTURE',
@@ -234,6 +236,7 @@ export const STRINGS = {
   nl: {
     title: 'TIMER',
     help: 'HULP',
+    howItWorks: 'Hoe werkt het?',
     language: 'Taal',
     intro: 'Intervaltimer voor een volledig blok: oefeningen, rondes en rust. Instellen, dan starten.',
     structure: 'STRUCTUUR',

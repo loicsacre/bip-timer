@@ -126,10 +126,17 @@ ${sharing({ address, ...meta })}
       <h1>BIP Timer</h1>
       <p>${t.intro}</p>
     </main>
-    <article class="guide guide-page">
-      <h2 class="display">${t.guideTitle}</h2>
-      <p class="lead">${t.guideIntro}</p>
-      ${guideSections(t, 3)}
+    <article id="guide" class="screen help" role="dialog" aria-modal="true" aria-labelledby="guide-title" hidden>
+      <header class="brandbar">
+        <span class="display" id="guide-title">${t.helpTitle}</span>
+        <button type="button" class="close" data-action="close-help" aria-label="${t.close}"><i></i><i></i></button>
+      </header>
+      <div class="body guide">
+        <h2 class="display">${t.guideTitle}</h2>
+        <p class="lead">${t.guideIntro}</p>
+        ${guideSections(t, 3)}
+      </div>
+      <div class="foot"><button type="button" class="secondary" data-action="close-help">${t.backToSetup}</button></div>
     </article>
     <script type="module" src="../js/app.js"></script>
   </body>

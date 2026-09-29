@@ -2,7 +2,6 @@ import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, exercis
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
 import { track } from './analytics.js';
-import { guideSections } from './guide.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
 
 const STORAGE_KEY = 'bip-timer-settings';
@@ -301,7 +300,7 @@ function renderSetup() {
   return `
     <section class="screen setup">
       ${brandbar(tools)}
-      <p class="intro">${t.intro}</p>
+      <p class="intro">${t.intro} <button type="button" class="inline-link" data-action="help">${t.howItWorks}</button></p>
       <div class="fields">
         <div class="field choice">
           <div class="caption"><span class="mono">${t.structure}</span><span class="hint">${circuit ? t.circuitHint : t.seriesHint}</span></div>
@@ -323,20 +322,7 @@ function renderSetup() {
         ${wakeLockSupported ? '' : `<p class="notice">${t.noWakeLock}</p>`}
         <button type="button" class="primary" data-action="start">${PLAY_ICON}<span class="display">${t.start}</span></button>
       </footer>
-      ${state.help ? renderHelp() : ''}
     </section>`;
-}
-
-function renderHelp() {
-  return `
-    <div class="screen help" role="dialog" aria-modal="true" aria-label="${t.helpTitle}">
-      <header class="brandbar">
-        <span class="display" style="font-size: 32px">${t.helpTitle}</span>
-        <button type="button" class="close" data-action="close-help" aria-label="${t.close}"><i></i><i></i></button>
-      </header>
-      <div class="body guide">${guideSections(t)}</div>
-      <div class="foot"><button type="button" class="secondary" data-action="close-help">${t.backToSetup}</button></div>
-    </div>`;
 }
 
 // Session
@@ -568,11 +554,7 @@ function renderEnd() {
 
 // Rendering keeps the setup list's scroll and the focused control across a redraw.
 function render() {
-  // The page's own guide under the tool only belongs to the setup screen.
-  document.documentElement.dataset.screen = state.screen;
-
-  const scroller = app.querySelector('.fields, .help .body');
-  const scroll = scroller ? { selector: scroller.matches('.fields') ? '.fields' : '.help .body', top: scroller.scrollTop } : null;
+  const scrollTop = app.querySelector('.fields')?.scrollTop;
   const focused = document.activeElement?.closest?.('[data-action], [data-step]');
   const focusKey = focused ? focusSelector(focused) : null;
 
@@ -586,12 +568,10 @@ function render() {
     app.innerHTML = renderEnd();
   }
 
-  if (scroll) {
-    const restored = app.querySelector(scroll.selector);
+  const fields = app.querySelector('.fields');
 
-    if (restored) {
-      restored.scrollTop = scroll.top;
-    }
+  if (fields && scrollTop) {
+    fields.scrollTop = scrollTop;
   }
 
   if (focusKey) {
@@ -636,7 +616,6 @@ function paintGauge() {
 
 function start() {
   unlockAudio();
-  window.scrollTo(0, 0);
 
   state.runSettings = { ...state.settings };
   state.run = new Run(buildSteps(state.runSettings), {
@@ -645,7 +624,7 @@ function start() {
   state.run.start();
   state.screen = 'session';
   track(`session-start/${format(state.runSettings)}`);
-  state.help = false;
+  showGuide(false);
   state.confirm = false;
 
   keepAwake();
@@ -802,15 +781,34 @@ function stepSetting(target, direction) {
   return applySettings(next);
 }
 
+// The guide is part of the page itself, outside the app, so search engines read it; the help button
+// only reveals it.
+let guideOpener = null;
+
+function showGuide(open) {
+  const guide = document.getElementById('guide');
+
+  if (!guide || guide.hidden === !open) {
+    return;
+  }
+
+  state.help = open;
+  guide.hidden = !open;
+
+  if (open) {
+    guideOpener = document.activeElement;
+    guide.querySelector('.body').scrollTop = 0;
+    guide.querySelector('.close').focus({ preventScroll: true });
+  } else {
+    const back = guideOpener?.isConnected && guideOpener !== document.body ? guideOpener : app.querySelector('.help-button');
+
+    back?.focus({ preventScroll: true });
+  }
+}
+
 const ACTIONS = {
-  help: () => {
-    state.help = true;
-    render();
-  },
-  'close-help': () => {
-    state.help = false;
-    render();
-  },
+  help: () => showGuide(true),
+  'close-help': () => showGuide(false),
   set: (button) => {
     const { key, value } = button.dataset;
     const parsed = key === 'sound' ? value === 'true' : value;
@@ -892,7 +890,7 @@ for (const type of ['pointerup', 'pointercancel']) {
   document.addEventListener(type, stopHold);
 }
 
-app.addEventListener('click', (event) => {
+document.addEventListener('click', (event) => {
   const stepper = event.target.closest('[data-step]');
 
   if (stepper) {

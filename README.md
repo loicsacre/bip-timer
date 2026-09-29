@@ -59,7 +59,7 @@ The iPhone silent switch mutes the beeps, and the sound mixes with music already
 - `js/device.js`: sound (Web Audio), vibration, screen wake lock.
 - `js/app.js`: the four screens (setup, help, session, end), in one column on a phone and two on a wide screen.
 - `js/i18n.js`: French, English and Dutch; each has its own page, the root picks one from the browser languages.
-- `js/guide.js`: the how-to, shared by the help screen and the pages search engines read.
+- `js/guide.js`: the how-to, written into each page by the generator; the help button reveals it.
 - `js/analytics.js`: anonymous counts sent to GoatCounter (https://biptimer.goatcounter.com): page views, sessions
   started and finished per format (`session-start/circuit-time`…), installs. No cookie, nothing personal; localhost is
   never counted.

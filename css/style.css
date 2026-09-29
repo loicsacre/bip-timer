@@ -273,8 +273,6 @@ button:focus-visible {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  /* Reaching the end of the settings must not scroll the page on to the guide below. */
-  overscroll-behavior: contain;
   padding: 0 20px;
 }
 
@@ -491,9 +489,25 @@ button:focus-visible {
 /* Help */
 
 .help {
+  position: fixed;
   padding-top: var(--safe-top);
   background: var(--background);
   z-index: 2;
+}
+
+.help[hidden] {
+  display: none;
+}
+
+.help > .brandbar .display {
+  font-size: 32px;
+}
+
+.inline-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--control-line);
+  text-underline-offset: 3px;
 }
 
 .close {
@@ -571,35 +585,17 @@ button:focus-visible {
   color: var(--text-secondary);
 }
 
-/* The same guide under the tool, for anyone reading the page in a browser. It never shows during a
-   run, nor in the installed app where the help screen already holds it. */
-.guide-page {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 56px 20px calc(var(--safe-bottom) + 56px);
-  border-top: 1px solid var(--line);
-}
-
-.guide-page > .display {
-  font-size: clamp(30px, 7vw, 48px);
+.guide > .display {
+  margin-top: 12px;
+  font-size: clamp(30px, 7vw, 44px);
   line-height: 1.02;
 }
 
-.guide-page > .lead {
-  margin: 16px 0 12px;
-  font-size: 17px;
+.guide > .lead {
+  margin: 12px 0 4px;
+  font-size: 16px;
   line-height: 1.55;
   color: var(--text-secondary);
-}
-
-html:not([data-screen='setup']) .guide-page {
-  display: none;
-}
-
-@media (display-mode: standalone) {
-  .guide-page {
-    display: none;
-  }
 }
 
 .help .foot {

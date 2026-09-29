@@ -86,9 +86,17 @@ button {
   cursor: pointer;
 }
 
-/* Every press answers at once, before any sound or screen change confirms it. */
+/* Every press answers at once, before any sound or screen change confirms it: the button dims and
+   gives a little under the finger. */
+button {
+  transition:
+    transform 80ms ease-out,
+    opacity 80ms ease-out;
+}
+
 button:active:not(:disabled) {
-  opacity: 0.72;
+  opacity: 0.8;
+  transform: scale(0.96);
 }
 
 button:focus-visible {
@@ -345,22 +353,29 @@ button:focus-visible {
   color: var(--ink);
 }
 
+/* Minus, value and plus sit in one frame, so the three read as a single control. */
 .stepper {
   flex: none;
   display: flex;
-  align-items: center;
-  gap: 6px;
+  border: 1px solid var(--control-line);
 }
 
 .stepper button {
   position: relative;
   width: 56px;
   height: 44px;
-  border: 1px solid var(--control-line);
   background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.stepper button:first-child {
+  border-right: 1px solid var(--control-line);
+}
+
+.stepper button:last-child {
+  border-left: 1px solid var(--control-line);
 }
 
 .stepper button:disabled {
@@ -382,6 +397,7 @@ button:focus-visible {
 
 .stepper .value {
   width: 76px;
+  align-self: center;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -1336,8 +1352,13 @@ button > * {
 /* Phase changes and pauses snap instead of fading for anyone who asked the system for less motion. */
 @media (prefers-reduced-motion: reduce) {
   .session,
-  .session .content {
+  .session .content,
+  button {
     transition: none;
+  }
+
+  button:active:not(:disabled) {
+    transform: none;
   }
 }
 

@@ -1,6 +1,7 @@
 import { DEFAULT_SETTINGS, SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
+import { track } from './analytics.js';
 import { guideSections } from './guide.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
 
@@ -639,6 +640,7 @@ function start() {
   });
   state.run.start();
   state.screen = 'session';
+  track(`session-start/${format(state.runSettings)}`);
   state.help = false;
   state.confirm = false;
 
@@ -654,6 +656,11 @@ function start() {
   requestAnimationFrame(loop);
 }
 
+// The four formats a block can take, as analytics reports them.
+function format(settings) {
+  return `${settings.structure}-${settings.unit}`;
+}
+
 function finish() {
   const { run, runSettings } = state;
 
@@ -666,6 +673,7 @@ function finish() {
   state.run = null;
   state.confirm = false;
   state.screen = 'end';
+  track(`session-finish/${format(runSettings)}`);
 
   allowSleep();
   render();
@@ -930,6 +938,8 @@ document.addEventListener('keydown', (event) => {
     keys[event.key]();
   }
 });
+
+window.addEventListener('appinstalled', () => track('app-installed'));
 
 // Safari only applies :active to a press when the page listens to touches.
 document.addEventListener('touchstart', () => {}, { passive: true });

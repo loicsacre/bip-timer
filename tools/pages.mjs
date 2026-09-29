@@ -110,6 +110,7 @@ ${sharing({ address, ...meta })}
     <script type="application/ld+json">${JSON.stringify(application)}</script>
     <link rel="preload" href="../fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="../css/style.css" />
+    <script data-goatcounter="https://biptimer.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   </head>
   <body>
     <main id="app">

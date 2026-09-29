@@ -84,6 +84,15 @@ ${alternates()}
     <link rel="apple-touch-icon" href="${root}icons/apple-touch-icon.png" />`;
 }
 
+// Names the site in search results, so a search for its name is not read as "beep timer".
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'BIP Timer',
+  alternateName: ['BIPTimer', 'biptimer.app'],
+  url: SITE,
+};
+
 function languagePage(code) {
   const t = STRINGS[code];
   const meta = META[code];
@@ -107,7 +116,7 @@ function languagePage(code) {
   <head>
 ${head({ root: '../', title: meta.title, description: meta.description, address })}
 ${sharing({ address, ...meta })}
-    <script type="application/ld+json">${JSON.stringify(application)}</script>
+    <script type="application/ld+json">${JSON.stringify([website, application])}</script>
     <link rel="preload" href="../fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="../css/style.css" />
     <script data-goatcounter="https://biptimer.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -117,9 +126,10 @@ ${sharing({ address, ...meta })}
       <h1>BIP Timer</h1>
       <p>${t.intro}</p>
     </main>
-    <article id="guide" hidden>
-      <h2>${t.helpTitle}</h2>
-      ${guideSections(t)}
+    <article class="guide guide-page">
+      <h2 class="display">${t.guideTitle}</h2>
+      <p class="lead">${t.guideIntro}</p>
+      ${guideSections(t, 3)}
     </article>
     <script type="module" src="../js/app.js"></script>
   </body>
@@ -142,6 +152,7 @@ ${sharing({ address: SITE, ...meta })}
       nav { display: flex; gap: 24px; justify-content: center; }
       a { color: inherit; }
     </style>
+    <script type="application/ld+json">${JSON.stringify(website)}</script>
     <script type="module">
       import { preferredLanguage } from './js/i18n.js';
 

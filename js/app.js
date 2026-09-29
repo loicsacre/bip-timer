@@ -334,7 +334,7 @@ function renderHelp() {
         <span class="display" style="font-size: 32px">${t.helpTitle}</span>
         <button type="button" class="close" data-action="close-help" aria-label="${t.close}"><i></i><i></i></button>
       </header>
-      <div class="body">${guideSections(t)}</div>
+      <div class="body guide">${guideSections(t)}</div>
       <div class="foot"><button type="button" class="secondary" data-action="close-help">${t.backToSetup}</button></div>
     </div>`;
 }
@@ -568,6 +568,9 @@ function renderEnd() {
 
 // Rendering keeps the setup list's scroll and the focused control across a redraw.
 function render() {
+  // The page's own guide under the tool only belongs to the setup screen.
+  document.documentElement.dataset.screen = state.screen;
+
   const scroller = app.querySelector('.fields, .help .body');
   const scroll = scroller ? { selector: scroller.matches('.fields') ? '.fields' : '.help .body', top: scroller.scrollTop } : null;
   const focused = document.activeElement?.closest?.('[data-action], [data-step]');
@@ -633,6 +636,7 @@ function paintGauge() {
 
 function start() {
   unlockAudio();
+  window.scrollTo(0, 0);
 
   state.runSettings = { ...state.settings };
   state.run = new Run(buildSteps(state.runSettings), {

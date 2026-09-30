@@ -81,18 +81,19 @@ const VIBRATIONS = {
   finish: [200, 100, 200],
 };
 
-export function signal(name, { sound }) {
+export function signal(name, { sound, throughSilent = false }) {
   navigator.vibrate?.(VIBRATIONS[name]);
 
   if (!sound || !context) {
     return;
   }
 
-  // Safari files a page's sounds with the ones the iPhone silent switch mutes; declared as playback,
-  // like music, the beeps get through it. Only once a beep is due, so a muted timer never pauses the
-  // music already playing.
-  if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
-    navigator.audioSession.type = 'playback';
+  // Safari files a page's sounds with the ones the iPhone silent switch mutes, mixed with the music.
+  // Declared as playback they get through the switch, but iOS then plays either them or the music.
+  const type = throughSilent ? 'playback' : 'auto';
+
+  if (navigator.audioSession && navigator.audioSession.type !== type) {
+    navigator.audioSession.type = type;
   }
 
   // A run goes on by itself, with no tap to wake the sound after an interruption: each beep does.
@@ -110,6 +111,12 @@ export function signal(name, { sound }) {
 }
 
 export const wakeLockSupported = 'wakeLock' in navigator;
+
+// Only iOS has the silent switch the audio session can get through; elsewhere the choice means nothing.
+export const silentSwitch = 'audioSession' in navigator && navigator.maxTouchPoints > 0;
+
+// When the music that took the sound over stops, iOS says so here: the next beep need not wait.
+navigator.audioSession?.addEventListener?.('statechange', () => wakeAudio());
 
 // The browser releases the lock whenever the page is hidden, so it is taken again each time the
 // page comes back while a run is on.

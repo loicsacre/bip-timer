@@ -1,7 +1,7 @@
 // Serves the app from the cache so it opens offline, and refreshes the cache in the background:
 // a new version shows on the launch after the one that fetched it. Bump VERSION when a file is
 // added or removed. The pages themselves come from pages.json, written by the page generator.
-const VERSION = 'bip-timer-v18';
+const VERSION = 'bip-timer-v19';
 
 const FILES = [
   'manifest.webmanifest',

@@ -1,6 +1,6 @@
 import { SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
-import { allowSleep, keepAwake, signal, unlockAudio, wakeLockSupported } from './device.js';
+import { allowSleep, keepAwake, signal, silentSwitch, unlockAudio, wakeLockSupported } from './device.js';
 import { track } from './analytics.js';
 import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
 import { FIELDS, OWN_VALUES, clamp, normalized, ownValues, sanitize, varies, withoutOwnValues } from './settings.js';
@@ -197,6 +197,19 @@ function workRows(settings) {
   return rows;
 }
 
+// iPhone only, and only with the sound on: whether the beeps may get through the silent switch.
+function silentRow(settings) {
+  if (!silentSwitch || !settings.sound) {
+    return '';
+  }
+
+  return `
+    <div class="field choice last">
+      <div class="caption"><span class="mono">${t.silentMode}</span><span class="hint">${t.silentHint}</span></div>
+      ${segmented('throughSilent', [[false, t.silentRespect], [true, t.silentRing]])}
+    </div>`;
+}
+
 function summary(settings) {
   const steps = buildSteps(settings);
   const total = timedSeconds(steps);
@@ -276,10 +289,11 @@ function renderSetup() {
           ${segmented('unit', [['time', t.time], ['reps', t.reps]])}
         </div>
         ${setupRows(settings).map(([key, label]) => (key === 'work' ? workRows(settings) : stepperRow(key, label))).join('')}
-        <div class="field number last">
+        <div class="field number${silentRow(settings) ? '' : ' last'}">
           <span class="mono">${t.sound}</span>
           ${segmented('sound', [[true, t.on], [false, t.off]])}
         </div>
+        ${silentRow(settings)}
       </div>
       </div>
       <footer class="launch">
@@ -591,7 +605,7 @@ function start() {
 
   state.runSettings = { ...state.settings };
   state.run = new Run(buildSteps(state.runSettings), {
-    onSignal: (name) => signal(name, { sound: state.runSettings.sound }),
+    onSignal: (name) => signal(name, state.runSettings),
   });
   state.run.start();
   state.screen = 'session';
@@ -602,7 +616,7 @@ function start() {
   keepAwake();
 
   if (state.run.step.kind === StepKind.prep) {
-    signal('countdown', { sound: state.runSettings.sound });
+    signal('countdown', state.runSettings);
   } else {
     state.run.announce();
   }
@@ -808,7 +822,7 @@ const ACTIONS = {
   'close-help': () => showGuide(false),
   set: (button) => {
     const { key, value } = button.dataset;
-    const parsed = key === 'sound' ? value === 'true' : value;
+    const parsed = key === 'sound' || key === 'throughSilent' ? value === 'true' : value;
 
     changeSetting(key, parsed);
   },

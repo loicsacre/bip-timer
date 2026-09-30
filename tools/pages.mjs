@@ -247,12 +247,19 @@ ${entries.join('\n')}
 }
 
 export function pages() {
-  return {
+  const html = {
     'index.html': chooserPage(),
     ...Object.fromEntries(LANGUAGES.map((code) => [`${code}/index.html`, languagePage(code)])),
     ...Object.fromEntries(
       PRESETS.flatMap((preset) => LANGUAGES.map((code) => [`${presetPath(code, preset)}index.html`, languagePage(code, preset)])),
     ),
+  };
+
+  return {
+    ...html,
+    // Every page for the service worker to keep offline, so an installed app opens any template
+    // without a connection.
+    'pages.json': `${JSON.stringify(Object.keys(html).map((file) => `./${file.replace(/index\.html$/, '')}`), null, 2)}\n`,
     'sitemap.xml': sitemap(),
     'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
   };

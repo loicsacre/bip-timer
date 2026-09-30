@@ -1,14 +1,9 @@
 // Serves the app from the cache so it opens offline, and refreshes the cache in the background:
 // a new version shows on the launch after the one that fetched it. Bump VERSION when a file is
-// added or removed.
-const VERSION = 'bip-timer-v17';
+// added or removed. The pages themselves come from pages.json, written by the page generator.
+const VERSION = 'bip-timer-v18';
 
 const FILES = [
-  './',
-  'index.html',
-  'fr/',
-  'en/',
-  'nl/',
   'manifest.webmanifest',
   'css/style.css',
   'js/analytics.js',
@@ -33,7 +28,13 @@ const FILES = [
 self.addEventListener('install', (event) => {
   // Straight from the network: the HTTP cache could hand back a previous version of some files and
   // mix two releases in one cache.
-  event.waitUntil(caches.open(VERSION).then((cache) => cache.addAll(FILES.map((file) => new Request(file, { cache: 'reload' })))));
+  event.waitUntil(
+    caches.open(VERSION).then(async (cache) => {
+      const pages = await (await fetch('pages.json', { cache: 'reload' })).json();
+
+      await cache.addAll([...pages, ...FILES].map((file) => new Request(file, { cache: 'reload' })));
+    }),
+  );
   self.skipWaiting();
 });
 

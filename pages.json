@@ -1,0 +1,21 @@
+[
+  "./",
+  "./fr/",
+  "./en/",
+  "./nl/",
+  "./fr/minuteur-tabata/",
+  "./en/tabata-timer/",
+  "./nl/tabata-timer/",
+  "./fr/minuteur-hiit/",
+  "./en/hiit-timer/",
+  "./nl/hiit-timer/",
+  "./fr/minuteur-circuit-training/",
+  "./en/circuit-training-timer/",
+  "./nl/circuittraining-timer/",
+  "./fr/minuteur-fractionne/",
+  "./en/running-interval-timer/",
+  "./nl/intervaltraining-timer/",
+  "./fr/minuteur-musculation/",
+  "./en/strength-training-timer/",
+  "./nl/krachttraining-timer/"
+]

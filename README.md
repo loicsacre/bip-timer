@@ -51,7 +51,8 @@ that downloaded it.
 - iPhone (Safari): Share, then *Add to Home Screen*.
 - Android (Chrome): browser menu, then *Install app*.
 
-The iPhone silent switch mutes the beeps, and the sound mixes with music already playing. Vibration is Android only.
+On iPhone (iOS 17+) the beeps are declared as playback, so they get through the silent switch; music already
+playing may pause during a session. Elsewhere they mix with the music. Vibration is Android only.
 
 ## Layout
 

@@ -5,8 +5,7 @@ let lock = null;
 let wanted = false;
 
 // Must run inside a tap (the Start button): iOS keeps an audio context silent until a user gesture
-// has resumed it. The audio session is left to mix with whatever already plays, as bip does, which
-// means the iPhone silent switch mutes the beeps.
+// has resumed it.
 export function unlockAudio() {
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 
@@ -87,6 +86,13 @@ export function signal(name, { sound }) {
 
   if (!sound || !context) {
     return;
+  }
+
+  // Safari files a page's sounds with the ones the iPhone silent switch mutes; declared as playback,
+  // like music, the beeps get through it. Only once a beep is due, so a muted timer never pauses the
+  // music already playing.
+  if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
+    navigator.audioSession.type = 'playback';
   }
 
   // A run goes on by itself, with no tap to wake the sound after an interruption: each beep does.

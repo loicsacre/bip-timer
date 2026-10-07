@@ -14,7 +14,7 @@ export const FIELDS = {
 // The settings that can also be given per exercise, and where those values are kept.
 export const OWN_VALUES = { effort: 'exerciseEfforts', reps: 'exerciseReps' };
 
-export const INITIAL_SETTINGS = Object.freeze({ ...DEFAULT_SETTINGS, sound: true, throughSilent: false });
+export const INITIAL_SETTINGS = Object.freeze({ ...DEFAULT_SETTINGS, sound: true, throughSilent: false, countdown: true });
 
 export function clamp(value, field) {
   return Math.min(field.max, Math.max(field.min, value));
@@ -76,7 +76,7 @@ export function sanitize(input, base = INITIAL_SETTINGS) {
     settings.unit = input.unit;
   }
 
-  for (const key of ['sound', 'throughSilent']) {
+  for (const key of ['sound', 'throughSilent', 'countdown']) {
     if (typeof input[key] === 'boolean') {
       settings[key] = input[key];
     }

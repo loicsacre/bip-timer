@@ -8,6 +8,9 @@ import { settingsFromQuery, settingsToQuery } from './share.js';
 
 const STORAGE_KEY = 'bip-timer-settings';
 
+// The sound preferences belong to the phone, whatever page is open; the block belongs to the setup.
+const PREFERENCES = ['sound', 'throughSilent', 'countdown'];
+
 const PHASE_COLORS = { prep: 'var(--phase-prep)', effort: 'var(--phase-effort)', recovery: 'var(--phase-recovery)' };
 
 const HOLD_DELAY = 450;
@@ -42,13 +45,21 @@ function loadSettings() {
   }
 }
 
-// What the page brings on top of the last setup: a format page sets its block, and a shared link
-// sets the session it describes, then leaves the address so a reload keeps the user's changes.
+// What the page brings on top of the last setup: a format page always opens on its own block,
+// and a shared link sets the session it describes, then leaves the address so a reload keeps the
+// user's changes.
 function initialSettings() {
   let settings = loadSettings();
 
   if (page?.settings) {
-    settings = sanitize(page.settings, withoutOwnValues(settings));
+    const preferences = Object.fromEntries(PREFERENCES.map((key) => [key, settings[key]]));
+
+    settings = { ...sanitize(page.settings, withoutOwnValues(settings)), ...preferences };
+
+    // A page made to set the countdown (the beep timer) wins over the phone's preference.
+    if ('countdown' in page.settings) {
+      settings.countdown = page.settings.countdown;
+    }
   }
 
   const shared = settingsFromQuery(location.search, settings);
@@ -61,9 +72,15 @@ function initialSettings() {
   return settings;
 }
 
+// A format page keeps its block to itself, so a passing visit never replaces the setup saved on the
+// main page; only the sound preferences carry over.
 function saveSettings() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings));
+    const saved = page?.settings
+      ? { ...loadSettings(), ...Object.fromEntries(PREFERENCES.filter((key) => key !== 'countdown').map((key) => [key, state.settings[key]])) }
+      : state.settings;
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
   } catch {
     // Not remembering the setup is acceptable.
   }
@@ -197,17 +214,30 @@ function workRows(settings) {
   return rows;
 }
 
-// iPhone only, and only with the sound on: whether the beeps may get through the silent switch.
-function silentRow(settings) {
-  if (!silentSwitch || !settings.sound) {
-    return '';
+// The sound, then with the sound on its countdown and, on iPhone only, whether the beeps may get
+// through the silent switch.
+function soundRows(settings) {
+  const rows = [`<div class="field number"><span class="mono">${t.sound}</span>${segmented('sound', [[true, t.on], [false, t.off]])}</div>`];
+
+  if (settings.sound) {
+    rows.push(`
+      <div class="field choice">
+        <div class="caption"><span class="mono">${t.countdown}</span><span class="hint">${t.countdownHint}</span></div>
+        ${segmented('countdown', [[true, t.on], [false, t.off]])}
+      </div>`);
   }
 
-  return `
-    <div class="field choice last">
-      <div class="caption"><span class="mono">${t.silentMode}</span><span class="hint">${t.silentHint}</span></div>
-      ${segmented('throughSilent', [[false, t.silentRespect], [true, t.silentRing]])}
-    </div>`;
+  if (settings.sound && silentSwitch) {
+    rows.push(`
+      <div class="field choice">
+        <div class="caption"><span class="mono">${t.silentMode}</span><span class="hint">${t.silentHint}</span></div>
+        ${segmented('throughSilent', [[false, t.silentRespect], [true, t.silentRing]])}
+      </div>`);
+  }
+
+  rows[rows.length - 1] = rows[rows.length - 1].replace('class="field ', 'class="field last ');
+
+  return rows.join('');
 }
 
 function summary(settings) {
@@ -289,11 +319,7 @@ function renderSetup() {
           ${segmented('unit', [['time', t.time], ['reps', t.reps]])}
         </div>
         ${setupRows(settings).map(([key, label]) => (key === 'work' ? workRows(settings) : stepperRow(key, label))).join('')}
-        <div class="field number${silentRow(settings) ? '' : ' last'}">
-          <span class="mono">${t.sound}</span>
-          ${segmented('sound', [[true, t.on], [false, t.off]])}
-        </div>
-        ${silentRow(settings)}
+        ${soundRows(settings)}
       </div>
       </div>
       <footer class="launch">
@@ -605,7 +631,11 @@ function start() {
 
   state.runSettings = { ...state.settings };
   state.run = new Run(buildSteps(state.runSettings), {
-    onSignal: (name) => signal(name, state.runSettings),
+    onSignal: (name) => {
+      if (name !== 'countdown' || state.runSettings.countdown) {
+        signal(name, state.runSettings);
+      }
+    },
   });
   state.run.start();
   state.screen = 'session';
@@ -794,7 +824,8 @@ function showGuide(open) {
 
 // The phone's own share sheet where there is one; elsewhere the link is copied, and the button says so.
 async function shareSession(button) {
-  const url = `${location.origin}${location.pathname}?${settingsToQuery(state.settings)}`;
+  // To the main page of the language, where the session received is kept.
+  const url = `${new URL(`../${lang}/`, import.meta.url).href}?${settingsToQuery(state.settings)}`;
 
   track('share');
 
@@ -822,7 +853,7 @@ const ACTIONS = {
   'close-help': () => showGuide(false),
   set: (button) => {
     const { key, value } = button.dataset;
-    const parsed = key === 'sound' || key === 'throughSilent' ? value === 'true' : value;
+    const parsed = PREFERENCES.includes(key) ? value === 'true' : value;
 
     changeSetting(key, parsed);
   },

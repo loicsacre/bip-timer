@@ -271,4 +271,52 @@ export const PRESETS = [
       ],
     },
   },
+  {
+    // A plain repeating beep, for people who search for a beep timer: reachable from search and the
+    // guide, kept out of the template picker so the setup stays about training blocks.
+    picker: false,
+    settings: { structure: 'circuit', unit: 'time', exercises: 1, rounds: 60, prep: 5, effort: 30, recRound: 0, countdown: false },
+    fr: {
+      slug: 'minuteur-bip',
+      chip: 'Bip',
+      heading: 'Minuteur bip',
+      title: 'Minuteur bip : un bip toutes les 30 s ou chaque minute · BIP Timer',
+      description:
+        'Minuteur bip gratuit en ligne : un bip net toutes les 30 secondes, chaque minute ou à l’intervalle de ton choix, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.',
+      intro: 'Un bip toutes les 30 secondes pendant 30 minutes. Change l’intervalle, puis démarre.',
+      body: [
+        'Un minuteur bip fait une chose simple : il bipe à intervalle fixe, encore et encore, pour garder le rythme sans regarder l’heure. Des pompes chaque minute, un changement de position de gainage toutes les 30 secondes, une allure à tenir sur la piste, ou un rappel pour lever les yeux de ton travail.',
+        'Il est réglé ici sur un bip toutes les 30 secondes pendant 30 minutes : un exercice, 60 tours de 30 secondes, sans récupération et sans décompte 3-2-1, pour que chaque intervalle se termine sur un seul bip. Change l’intervalle avec Effort et la durée avec Tours : 60 tours de 60 s, c’est un bip chaque minute pendant une heure.',
+        'Besoin de plus qu’un bip ? C’est le même minuteur : ajoute des exercices, des récupérations entre exercices et entre tours, des séries ou des répétitions, et il déroule tout le bloc pour toi.',
+      ],
+    },
+    en: {
+      slug: 'beep-timer',
+      chip: 'Beep',
+      heading: 'Beep timer',
+      title: 'Beep Timer: a beep every 30 s, every minute or any interval · BIP Timer',
+      description:
+        'Free online beep timer: a clean beep every 30 seconds, every minute or any interval, for workouts, pacing or study. No install, works offline.',
+      intro: 'A beep every 30 seconds, for 30 minutes. Change the interval, then start.',
+      body: [
+        'A beep timer does one simple thing: it beeps at a fixed interval, again and again, so you keep the rhythm without watching a clock. Push-ups every minute, a plank switch every 30 seconds, a pace to hold on the track, or a reminder to look up from your work.',
+        'Here it is set to a beep every 30 seconds for 30 minutes: one exercise, 60 rounds of 30 seconds, with no rest and no 3-2-1 countdown, so each interval ends on a single beep. Change the interval with Work and the length with Rounds: 60 rounds of 60 s is a beep every minute for an hour.',
+        'Need more than a beep? It is the same timer: add exercises, rests between exercises and between rounds, sets or reps, and it runs the whole block for you.',
+      ],
+    },
+    nl: {
+      slug: 'piep-timer',
+      chip: 'Piep',
+      heading: 'Piep-timer',
+      title: 'Piep-timer: een piep elke 30 s of elke minuut · BIP Timer',
+      description:
+        'Gratis online piep-timer: een duidelijke piep elke 30 seconden, elke minuut of met het interval dat je kiest, voor sport, tempo of studeren. Zonder installatie, werkt offline.',
+      intro: 'Een piep elke 30 seconden, 30 minuten lang. Pas het interval aan en start.',
+      body: [
+        'Een piep-timer doet één eenvoudig ding: hij piept met een vast interval, telkens opnieuw, zodat je het ritme houdt zonder op de klok te kijken. Push-ups elke minuut, elke 30 seconden van plankhouding wisselen, een tempo vasthouden op de piste, of een herinnering om even op te kijken van je werk.',
+        'Hier staat hij op een piep elke 30 seconden, 30 minuten lang: één oefening, 60 rondes van 30 seconden, zonder rust en zonder aftellen 3-2-1, zodat elk interval eindigt op één enkele piep. Pas het interval aan met Inspanning en de duur met Rondes: 60 rondes van 60 s is een piep elke minuut, een uur lang.',
+        'Meer nodig dan een piep? Het is dezelfde timer: voeg oefeningen toe, rust tussen oefeningen en tussen rondes, reeksen of herhalingen, en hij laat het hele blok voor je lopen.',
+      ],
+    },
+  },
 ];

@@ -91,7 +91,7 @@ const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'BIP Timer',
-  alternateName: ['BIPTimer', 'biptimer.app'],
+  alternateName: ['BIPTimer', 'Beep Timer', 'biptimer.app'],
   url: SITE,
 };
 
@@ -141,7 +141,7 @@ function languagePage(code, preset = null) {
     label: PICKER_LABEL[code],
     links: [
       { label: FREE_CHIP[code], href: `/${mainPath(code)}` },
-      ...PRESETS.map((other) => ({ label: other[code].chip, href: `/${presetPath(code, other)}` })),
+      ...PRESETS.filter((other) => other.picker !== false).map((other) => ({ label: other[code].chip, href: `/${presetPath(code, other)}` })),
     ].map((link) => ({ ...link, current: link.href === `/${path}` })),
   };
   const data = ` data-page='${attribute({ picker, ...(format && { heading: format.heading, intro: format.intro, settings: preset.settings }) })}'`;

@@ -126,4 +126,25 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/krachttraining-timer/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/strength-training-timer/" />
   </url>
+  <url>
+    <loc>https://biptimer.app/fr/minuteur-bip/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-bip/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-bip/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-timer/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-timer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/minuteur-bip/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-timer/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-timer/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-timer/" />
+  </url>
 </urlset>

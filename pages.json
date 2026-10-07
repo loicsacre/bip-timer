@@ -17,5 +17,8 @@
   "./nl/intervaltraining-timer/",
   "./fr/minuteur-musculation/",
   "./en/strength-training-timer/",
-  "./nl/krachttraining-timer/"
+  "./nl/krachttraining-timer/",
+  "./fr/minuteur-bip/",
+  "./en/beep-timer/",
+  "./nl/piep-timer/"
 ]

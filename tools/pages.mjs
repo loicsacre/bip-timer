@@ -1,4 +1,4 @@
-// Writes one page per language, the language chooser at the root, the sitemap and robots.txt.
+// Writes one page per language, the language chooser at the root, the sitemap, robots.txt and llms.txt.
 // Run `npm run pages` after changing a string, the site address or this file.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -86,6 +86,15 @@ ${links}
     <link rel="apple-touch-icon" href="${root}icons/apple-touch-icon.png" />`;
 }
 
+// Who stands behind the site, for search engines and assistants answering a question about the brand.
+const publisher = {
+  '@type': 'Organization',
+  '@id': `${SITE}#organization`,
+  name: 'BIP Timer',
+  url: SITE,
+  logo: `${SITE}icons/icon-512.png`,
+};
+
 // Names the site in search results, so a search for its name is not read as "beep timer".
 const website = {
   '@context': 'https://schema.org',
@@ -93,6 +102,7 @@ const website = {
   name: 'BIP Timer',
   alternateName: ['BIPTimer', 'Beep Timer', 'biptimer.app'],
   url: SITE,
+  publisher,
 };
 
 const mainPath = (code) => `${code}/`;
@@ -152,6 +162,7 @@ function languagePage(code, preset = null) {
     browserRequirements: 'Requires JavaScript',
     image: `${SITE}${meta.image}`,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    publisher: { '@id': publisher['@id'] },
   };
   const picker = {
     label: PICKER_LABEL[code],
@@ -262,6 +273,28 @@ ${entries.join('\n')}
 `;
 }
 
+// The site summarised for language models, following llmstxt.org: what it is, then every page.
+function llms() {
+  const entry = (path, title, description) => `- [${title}](${SITE}${path}): ${description}`;
+  const sections = LANGUAGES.map((code) =>
+    [
+      `## ${META[code].name}`,
+      '',
+      entry(mainPath(code), META[code].title, META[code].description),
+      ...PRESETS.map((preset) => entry(presetPath(code, preset), preset[code].title, preset[code].description)),
+    ].join('\n'),
+  );
+
+  return `# BIP Timer
+
+> ${META.en.description}
+
+A free interval timer that runs in the browser, in French, English and Dutch. It plays a whole block of exercises: circuit or sets, by time or by reps, with preparation, effort and three kinds of rest. It beeps at each change, counts down the last seconds, keeps the screen awake and installs as an app that works offline. No account, no ads, settings stay on the phone.
+
+${sections.join('\n\n')}
+`;
+}
+
 export function pages() {
   const html = {
     'index.html': chooserPage(),
@@ -277,6 +310,7 @@ export function pages() {
     // without a connection.
     'pages.json': `${JSON.stringify(Object.keys(html).map((file) => `./${file.replace(/index\.html$/, '')}`), null, 2)}\n`,
     'sitemap.xml': sitemap(),
+    'llms.txt': llms(),
     'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
   };
 }

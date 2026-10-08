@@ -1,0 +1,53 @@
+# BIP Timer
+
+> Interval timer for a whole block: exercises, rounds and rests. Set in ten seconds, started in one tap. No install, works offline.
+
+A free interval timer that runs in the browser, in French, English and Dutch. It plays a whole block of exercises: circuit or sets, by time or by reps, with preparation, effort and three kinds of rest. It beeps at each change, counts down the last seconds, keeps the screen awake and installs as an app that works offline. No account, no ads, settings stay on the phone.
+
+## Français
+
+- [BIP Timer · Minuteur d’intervalles gratuit : HIIT, circuit, séries](https://biptimer.app/fr/): Minuteur d’intervalles pour un bloc complet : exercices, tours et récupérations. Réglé en dix secondes, lancé en un tap. Sans installation, hors ligne.
+- [Minuteur Tabata gratuit : 8 tours de 20 s / 10 s · BIP Timer](https://biptimer.app/fr/minuteur-tabata/): Minuteur Tabata prêt à l’emploi : 8 tours de 20 s d’effort et 10 s de repos, avec bips et couleurs lisibles de loin. Gratuit, sans installation.
+- [Minuteur HIIT gratuit en ligne : circuit, tours et récupérations · BIP Timer](https://biptimer.app/fr/minuteur-hiit/): Minuteur HIIT en ligne : plusieurs exercices, 40 s d’effort, 20 s entre exercices, 60 s entre tours. Bips, écran lisible de loin, gratuit et sans installation.
+- [Minuteur circuit training : plusieurs exercices et tours · BIP Timer](https://biptimer.app/fr/minuteur-circuit-training/): Minuteur pour circuit training : jusqu’à 30 exercices, repos entre exercices et entre tours, durée propre à chaque exercice. Gratuit, dans le navigateur.
+- [Minuteur fractionné 30/30 pour la course et le vélo · BIP Timer](https://biptimer.app/fr/minuteur-fractionne/): Minuteur de fractionné 30/30 : 10 répétitions de 30 s d’effort et 30 s de récupération, avec bips. Réglable pour le 15/15 ou le 1/1. Gratuit.
+- [Minuteur musculation : séries, répétitions et temps de repos · BIP Timer](https://biptimer.app/fr/minuteur-musculation/): Minuteur de musculation par séries : il compte tes séries, attend ta validation après chaque série et chronomètre les temps de repos. Gratuit, sans installation.
+- [Minuteur bip : un bip toutes les 30 s ou chaque minute · BIP Timer](https://biptimer.app/fr/minuteur-bip/): Minuteur bip gratuit en ligne : un bip net toutes les 30 secondes, chaque minute ou à l’intervalle de ton choix, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les 10 secondes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-10-secondes/): Un bip toutes les 10 secondes, en boucle pendant 10 minutes : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les 15 secondes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-15-secondes/): Un bip toutes les 15 secondes, en boucle pendant 20 minutes : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les 30 secondes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-30-secondes/): Un bip toutes les 30 secondes, en boucle pendant 30 minutes : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-minutes/): Un bip toutes les minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les 2 minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-2-minutes/): Un bip toutes les 2 minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Bip toutes les 5 minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-5-minutes/): Un bip toutes les 5 minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+
+## English
+
+- [BIP Timer · Free interval timer: HIIT, circuit, sets](https://biptimer.app/en/): Interval timer for a whole block: exercises, rounds and rests. Set in ten seconds, started in one tap. No install, works offline.
+- [Free Tabata timer: 8 rounds of 20 s / 10 s · BIP Timer](https://biptimer.app/en/tabata-timer/): Ready-made Tabata timer: 8 rounds of 20 s work and 10 s rest, with beeps and colours you can read from afar. Free, no install.
+- [Free online HIIT timer: circuit, rounds and rests · BIP Timer](https://biptimer.app/en/hiit-timer/): Online HIIT timer: several exercises, 40 s work, 20 s between exercises, 60 s between rounds. Beeps, a screen you read from afar, free and no install.
+- [Circuit training timer: several exercises and rounds · BIP Timer](https://biptimer.app/en/circuit-training-timer/): Circuit training timer: up to 30 exercises, rest between exercises and between rounds, a work time of its own for each exercise. Free, in the browser.
+- [30/30 interval timer for running and cycling · BIP Timer](https://biptimer.app/en/running-interval-timer/): 30/30 interval timer: 10 reps of 30 s work and 30 s recovery, with beeps. Adjustable for 15/15 or 1/1. Free.
+- [Strength training timer: sets, reps and rest times · BIP Timer](https://biptimer.app/en/strength-training-timer/): Strength training timer by sets: it counts your sets, waits for you to confirm each one and times your rests. Free, no install.
+- [Beep Timer: a beep every 30 s, every minute or any interval · BIP Timer](https://biptimer.app/en/beep-timer/): Free online beep timer: a clean beep every 30 seconds, every minute or any interval, for workouts, pacing or study. No install, works offline.
+- [Beep every 10 seconds · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-10-seconds/): A beep every 10 seconds, on repeat for 10 minutes: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Beep every 15 seconds · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-15-seconds/): A beep every 15 seconds, on repeat for 20 minutes: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Beep every 30 seconds · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-30-seconds/): A beep every 30 seconds, on repeat for 30 minutes: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Beep every minute · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-minute/): A beep every minute, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Beep every 2 minutes · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-2-minutes/): A beep every 2 minutes, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Beep every 5 minutes · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-5-minutes/): A beep every 5 minutes, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
+
+## Nederlands
+
+- [BIP Timer · Gratis intervaltimer: HIIT, circuit, reeksen](https://biptimer.app/nl/): Intervaltimer voor een volledig blok: oefeningen, rondes en rust. Ingesteld in tien seconden, gestart met één tik. Zonder installatie, werkt offline.
+- [Gratis Tabata-timer: 8 rondes van 20 s / 10 s · BIP Timer](https://biptimer.app/nl/tabata-timer/): Kant-en-klare Tabata-timer: 8 rondes van 20 s inspanning en 10 s rust, met piepjes en kleuren die je van ver leest. Gratis, zonder installatie.
+- [Gratis online HIIT-timer: circuit, rondes en rust · BIP Timer](https://biptimer.app/nl/hiit-timer/): Online HIIT-timer: meerdere oefeningen, 40 s inspanning, 20 s tussen oefeningen, 60 s tussen rondes. Piepjes, een scherm dat je van ver leest, gratis en zonder installatie.
+- [Circuittraining-timer: meerdere oefeningen en rondes · BIP Timer](https://biptimer.app/nl/circuittraining-timer/): Timer voor circuittraining: tot 30 oefeningen, rust tussen oefeningen en tussen rondes, een eigen tijd per oefening. Gratis, in de browser.
+- [Intervaltimer 30/30 voor lopen en fietsen · BIP Timer](https://biptimer.app/nl/intervaltraining-timer/): Intervaltimer 30/30: 10 herhalingen van 30 s inspanning en 30 s herstel, met piepjes. Instelbaar voor 15/15 of 1/1. Gratis.
+- [Krachttraining-timer: reeksen, herhalingen en rusttijden · BIP Timer](https://biptimer.app/nl/krachttraining-timer/): Timer voor krachttraining per reeks: hij telt je reeksen, wacht tot je elke reeks bevestigt en klokt je rusttijden. Gratis, zonder installatie.
+- [Piep-timer: een piep elke 30 s of elke minuut · BIP Timer](https://biptimer.app/nl/piep-timer/): Gratis online piep-timer: een duidelijke piep elke 30 seconden, elke minuut of met het interval dat je kiest, voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke 10 seconden · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-10-seconden/): Een piep elke 10 seconden, 10 minuten lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke 15 seconden · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-15-seconden/): Een piep elke 15 seconden, 20 minuten lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke 30 seconden · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-30-seconden/): Een piep elke 30 seconden, 30 minuten lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke minuut · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-minuut/): Een piep elke minuut, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke 2 minuten · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-2-minuten/): Een piep elke 2 minuten, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Piep elke 5 minuten · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-5-minuten/): Een piep elke 5 minuten, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.

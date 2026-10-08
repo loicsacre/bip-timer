@@ -26,7 +26,7 @@ dependencies).
 
 ## Pages and preview images
 
-The root `index.html`, the three language pages, the format pages, `sitemap.xml` and `robots.txt` are generated:
+The root `index.html`, the three language pages, the format pages, `sitemap.xml`, `robots.txt` and `llms.txt` are generated:
 edit `tools/pages.mjs` (titles, descriptions, site address), `tools/presets.mjs` (format pages) or the strings in
 `js/i18n.js`, then run
 

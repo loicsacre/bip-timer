@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { guideSections } from '../js/guide.js';
 import { LANGUAGES, STRINGS } from '../js/i18n.js';
 
-import { FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL } from './presets.mjs';
+import { BEEP_LABEL, FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL } from './presets.mjs';
 
 // The only place the address lives: change it here when the site moves to its own domain.
 export const SITE = 'https://biptimer.app/';
@@ -98,18 +98,34 @@ const website = {
 const mainPath = (code) => `${code}/`;
 const presetPath = (code, preset) => `${code}/${preset[code].slug}/`;
 
-const THIS_FORMAT = { fr: 'CE FORMAT', en: 'THIS FORMAT', nl: 'DIT FORMAT' };
-
-// Every page links to every format and to the free setup, so each can be reached and ranked.
+// Every page links to every format and every beep page, so each can be reached and ranked: the
+// training formats with the free setup, then the beep timer and its intervals.
 function formatsSection(code, current) {
   const link = (path, label) =>
     path === current ? `<a href="/${path}" aria-current="page">${label}</a>` : `<a href="/${path}">${label}</a>`;
-  const items = [
-    link(mainPath(code), FREE_SETUP_LABEL[code]),
-    ...PRESETS.map((preset) => link(presetPath(code, preset), preset[code].heading)),
-  ];
+  const group = (label, links) => `<section class="formats"><h3 class="mono">${label}</h3><nav>${links.join('')}</nav></section>`;
+  const training = PRESETS.filter((preset) => preset.group !== 'beep');
+  const beep = PRESETS.filter((preset) => preset.group === 'beep');
 
-  return `<section class="formats"><h3 class="mono">${PRESETS_LABEL[code]}</h3><nav>${items.join('')}</nav></section>`;
+  return (
+    group(PRESETS_LABEL[code], [
+      link(mainPath(code), FREE_SETUP_LABEL[code]),
+      ...training.map((preset) => link(presetPath(code, preset), preset[code].heading)),
+    ]) + group(BEEP_LABEL[code], beep.map((preset) => link(presetPath(code, preset), preset[code].heading)))
+  );
+}
+
+// A format page answers the question its name raises, then any how-to, ideas and questions of its own.
+function formatText(format) {
+  const paragraphs = (texts) => texts.map((text) => `<p>${text}</p>`).join('');
+  const sections = (format.sections ?? []).map(([title, texts]) => `<section><h3 class="mono">${title}</h3>${paragraphs(texts)}</section>`);
+  const faq = format.faq
+    ? `<section class="faq"><h3 class="mono">${format.faqTitle}</h3>${format.faq
+        .map(([question, answer]) => `<h4 class="question">${question}</h4><p>${answer}</p>`)
+        .join('')}</section>`
+    : '';
+
+  return [`<section><h3 class="mono">${format.question}</h3>${paragraphs(format.body)}</section>`, ...sections, faq].join('');
 }
 
 // The page data is JSON inside a single-quoted attribute: only & and ' need escaping.
@@ -148,7 +164,7 @@ function languagePage(code, preset = null) {
   const lead = format
     ? `<h2 class="display">${format.heading}</h2>
         <p class="lead">${format.intro}</p>
-        <section><h3 class="mono">${THIS_FORMAT[code]}</h3>${format.body.map((text) => `<p>${text}</p>`).join('')}</section>`
+        ${formatText(format)}`
     : `<h2 class="display">${t.guideTitle}</h2>
         <p class="lead">${t.guideIntro}</p>`;
 

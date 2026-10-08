@@ -147,4 +147,130 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-timer/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-timer/" />
   </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-10-secondes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-10-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-10-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-10-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-10-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-10-seconds/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-10-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-10-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-10-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-10-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-10-seconden/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-10-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-10-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-10-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-10-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-15-secondes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-15-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-15-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-15-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-15-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-15-seconds/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-15-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-15-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-15-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-15-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-15-seconden/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-15-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-15-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-15-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-15-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-30-secondes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-30-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-30-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-30-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-30-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-30-seconds/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-30-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-30-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-30-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-30-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-30-seconden/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-30-secondes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-30-seconds/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-30-seconden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-30-seconds/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-minutes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-minute/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-minuut/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-minute/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-minute/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-minute/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-minuut/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-minute/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-minuut/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-minute/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-minuut/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-minute/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-2-minutes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-2-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-2-minutes/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-2-minutes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-2-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-2-minutes/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-2-minuten/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-2-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-2-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-2-minutes/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/fr/bip-toutes-les-5-minutes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-5-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-5-minutes/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/beep-every-5-minutes/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-5-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-5-minutes/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/piep-elke-5-minuten/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/bip-toutes-les-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/beep-every-5-minutes/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-5-minuten/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-5-minutes/" />
+  </url>
 </urlset>

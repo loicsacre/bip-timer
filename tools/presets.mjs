@@ -25,6 +25,7 @@ export const PRESETS = [
       slug: 'minuteur-tabata',
       chip: 'Tabata',
       heading: 'Minuteur Tabata',
+      question: 'Qu’est-ce que le Tabata ?',
       title: 'Minuteur Tabata gratuit : 8 tours de 20 s / 10 s · BIP Timer',
       description:
         'Minuteur Tabata prêt à l’emploi : 8 tours de 20 s d’effort et 10 s de repos, avec bips et couleurs lisibles de loin. Gratuit, sans installation.',
@@ -39,6 +40,7 @@ export const PRESETS = [
       slug: 'tabata-timer',
       chip: 'Tabata',
       heading: 'Tabata timer',
+      question: 'What is Tabata?',
       title: 'Free Tabata timer: 8 rounds of 20 s / 10 s · BIP Timer',
       description:
         'Ready-made Tabata timer: 8 rounds of 20 s work and 10 s rest, with beeps and colours you can read from afar. Free, no install.',
@@ -53,6 +55,7 @@ export const PRESETS = [
       slug: 'tabata-timer',
       chip: 'Tabata',
       heading: 'Tabata-timer',
+      question: 'Wat is Tabata?',
       title: 'Gratis Tabata-timer: 8 rondes van 20 s / 10 s · BIP Timer',
       description:
         'Kant-en-klare Tabata-timer: 8 rondes van 20 s inspanning en 10 s rust, met piepjes en kleuren die je van ver leest. Gratis, zonder installatie.',
@@ -79,6 +82,7 @@ export const PRESETS = [
       slug: 'minuteur-hiit',
       chip: 'HIIT',
       heading: 'Minuteur HIIT',
+      question: 'Qu’est-ce que le HIIT ?',
       title: 'Minuteur HIIT gratuit en ligne : circuit, tours et récupérations · BIP Timer',
       description:
         'Minuteur HIIT en ligne : plusieurs exercices, 40 s d’effort, 20 s entre exercices, 60 s entre tours. Bips, écran lisible de loin, gratuit et sans installation.',
@@ -93,6 +97,7 @@ export const PRESETS = [
       slug: 'hiit-timer',
       chip: 'HIIT',
       heading: 'HIIT timer',
+      question: 'What is HIIT?',
       title: 'Free online HIIT timer: circuit, rounds and rests · BIP Timer',
       description:
         'Online HIIT timer: several exercises, 40 s work, 20 s between exercises, 60 s between rounds. Beeps, a screen you read from afar, free and no install.',
@@ -107,6 +112,7 @@ export const PRESETS = [
       slug: 'hiit-timer',
       chip: 'HIIT',
       heading: 'HIIT-timer',
+      question: 'Wat is HIIT?',
       title: 'Gratis online HIIT-timer: circuit, rondes en rust · BIP Timer',
       description:
         'Online HIIT-timer: meerdere oefeningen, 40 s inspanning, 20 s tussen oefeningen, 60 s tussen rondes. Piepjes, een scherm dat je van ver leest, gratis en zonder installatie.',
@@ -133,6 +139,7 @@ export const PRESETS = [
       slug: 'minuteur-circuit-training',
       chip: 'Circuit',
       heading: 'Minuteur circuit training',
+      question: 'Qu’est-ce qu’un circuit training ?',
       title: 'Minuteur circuit training : plusieurs exercices et tours · BIP Timer',
       description:
         'Minuteur pour circuit training : jusqu’à 30 exercices, repos entre exercices et entre tours, durée propre à chaque exercice. Gratuit, dans le navigateur.',
@@ -147,6 +154,7 @@ export const PRESETS = [
       slug: 'circuit-training-timer',
       chip: 'Circuit',
       heading: 'Circuit training timer',
+      question: 'What is circuit training?',
       title: 'Circuit training timer: several exercises and rounds · BIP Timer',
       description:
         'Circuit training timer: up to 30 exercises, rest between exercises and between rounds, a work time of its own for each exercise. Free, in the browser.',
@@ -161,6 +169,7 @@ export const PRESETS = [
       slug: 'circuittraining-timer',
       chip: 'Circuit',
       heading: 'Circuittraining-timer',
+      question: 'Wat is circuittraining?',
       title: 'Circuittraining-timer: meerdere oefeningen en rondes · BIP Timer',
       description:
         'Timer voor circuittraining: tot 30 oefeningen, rust tussen oefeningen en tussen rondes, een eigen tijd per oefening. Gratis, in de browser.',
@@ -178,6 +187,7 @@ export const PRESETS = [
       slug: 'minuteur-fractionne',
       chip: '30/30',
       heading: 'Minuteur fractionné 30/30',
+      question: 'Qu’est-ce que le fractionné 30/30 ?',
       title: 'Minuteur fractionné 30/30 pour la course et le vélo · BIP Timer',
       description:
         'Minuteur de fractionné 30/30 : 10 répétitions de 30 s d’effort et 30 s de récupération, avec bips. Réglable pour le 15/15 ou le 1/1. Gratuit.',
@@ -192,6 +202,7 @@ export const PRESETS = [
       slug: 'running-interval-timer',
       chip: '30/30',
       heading: '30/30 interval timer',
+      question: 'What is a 30/30 interval session?',
       title: '30/30 interval timer for running and cycling · BIP Timer',
       description:
         '30/30 interval timer: 10 reps of 30 s work and 30 s recovery, with beeps. Adjustable for 15/15 or 1/1. Free.',
@@ -206,6 +217,7 @@ export const PRESETS = [
       slug: 'intervaltraining-timer',
       chip: '30/30',
       heading: 'Intervaltimer 30/30',
+      question: 'Wat is een 30/30-intervaltraining?',
       title: 'Intervaltimer 30/30 voor lopen en fietsen · BIP Timer',
       description:
         'Intervaltimer 30/30: 10 herhalingen van 30 s inspanning en 30 s herstel, met piepjes. Instelbaar voor 15/15 of 1/1. Gratis.',
@@ -232,6 +244,7 @@ export const PRESETS = [
       slug: 'minuteur-musculation',
       chip: 'Muscu',
       heading: 'Minuteur musculation par séries',
+      question: 'Comment chronométrer une séance de musculation ?',
       title: 'Minuteur musculation : séries, répétitions et temps de repos · BIP Timer',
       description:
         'Minuteur de musculation par séries : il compte tes séries, attend ta validation après chaque série et chronomètre les temps de repos. Gratuit, sans installation.',
@@ -246,6 +259,7 @@ export const PRESETS = [
       slug: 'strength-training-timer',
       chip: 'Strength',
       heading: 'Strength training timer',
+      question: 'How do you time a strength session?',
       title: 'Strength training timer: sets, reps and rest times · BIP Timer',
       description:
         'Strength training timer by sets: it counts your sets, waits for you to confirm each one and times your rests. Free, no install.',
@@ -260,6 +274,7 @@ export const PRESETS = [
       slug: 'krachttraining-timer',
       chip: 'Kracht',
       heading: 'Krachttraining-timer',
+      question: 'Hoe time je een krachttraining?',
       title: 'Krachttraining-timer: reeksen, herhalingen en rusttijden · BIP Timer',
       description:
         'Timer voor krachttraining per reeks: hij telt je reeksen, wacht tot je elke reeks bevestigt en klokt je rusttijden. Gratis, zonder installatie.',
@@ -275,11 +290,39 @@ export const PRESETS = [
     // A plain repeating beep, for people who search for a beep timer: reachable from search and the
     // guide, kept out of the template picker so the setup stays about training blocks.
     picker: false,
+    group: 'beep',
     settings: { structure: 'circuit', unit: 'time', exercises: 1, rounds: 60, prep: 5, effort: 30, recRound: 0, countdown: false },
     fr: {
       slug: 'minuteur-bip',
+      sections: [
+        [
+          'COMMENT L’UTILISER',
+          [
+            'Règle l’intervalle avec Effort : 30 s pour un bip toutes les demi-minutes, 1:00 pour un bip chaque minute, jusqu’à 10 minutes.',
+            'Règle la durée avec Tours : le minuteur bipe une fois à la fin de chaque tour, donc 60 tours de 30 s font 30 minutes.',
+            'Appuie sur Démarrer et pose le téléphone : l’écran reste allumé, un bip sonne à chaque intervalle et l’écran indique les tours restants.',
+          ],
+        ],
+        [
+          'IDÉES D’INTERVALLES',
+          [
+            '<strong>Pompes chaque minute</strong> (EMOM) : 10 pompes à chaque bip, repos jusqu’au suivant.',
+            '<strong>Gainage tournant</strong> : face, côté gauche, côté droit, on change à chaque bip toutes les 30 s.',
+            '<strong>Allure de course</strong> : un bip toutes les 15 s pour vérifier ton passage sur la piste.',
+            '<strong>Révisions ou bureau</strong> : un bip toutes les 5 minutes pour lever les yeux, boire ou passer à la question suivante.',
+          ],
+        ],
+      ],
+      faqTitle: 'QUESTIONS SUR LE MINUTEUR BIP',
+      faq: [
+        ['Peut-on avoir un bip chaque minute pendant une heure ?', 'Oui : mets Effort à 1:00 et Tours à 60. Une séance va jusqu’à 99 tours de 10 minutes maximum chacun.'],
+        ['Est-ce qu’il continue de biper écran éteint ?', 'L’écran reste allumé pendant la séance, donc les bips continuent. Si tu verrouilles le téléphone, le navigateur met la page en pause : le minuteur continue de compter et les bips reprennent à ton retour.'],
+        ['Est-ce qu’il marche hors ligne ?', 'Oui. Une fois ouvert, ou ajouté à l’écran d’accueil, il fonctionne sans connexion.'],
+        ['Peut-on entendre un décompte 3-2-1 avant chaque bip ?', 'Oui : active Décompte sous Son. Il est coupé ici pour que chaque intervalle se termine sur un seul bip.'],
+      ],
       chip: 'Bip',
       heading: 'Minuteur bip',
+      question: 'Qu’est-ce qu’un minuteur bip ?',
       title: 'Minuteur bip : un bip toutes les 30 s ou chaque minute · BIP Timer',
       description:
         'Minuteur bip gratuit en ligne : un bip net toutes les 30 secondes, chaque minute ou à l’intervalle de ton choix, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.',
@@ -292,8 +335,35 @@ export const PRESETS = [
     },
     en: {
       slug: 'beep-timer',
+      sections: [
+        [
+          'HOW TO USE IT',
+          [
+            'Set the interval with Work: 30 s for a beep every half minute, 1:00 for a beep every minute, up to 10 minutes.',
+            'Set how long it lasts with Rounds: the timer beeps once at the end of each round, so 60 rounds of 30 s make 30 minutes.',
+            'Press Start and put the phone down: the screen stays on, a beep sounds at each interval and the screen shows how many rounds are left.',
+          ],
+        ],
+        [
+          'INTERVAL IDEAS',
+          [
+            '<strong>Push-ups every minute</strong> (EMOM): 10 push-ups at each beep, rest until the next one.',
+            '<strong>Plank switches</strong>: front, left side, right side, changing at each beep every 30 s.',
+            '<strong>Running pace</strong>: a beep every 15 s to check your split on the track.',
+            '<strong>Study or desk work</strong>: a beep every 5 minutes to look up, drink, or move on to the next question.',
+          ],
+        ],
+      ],
+      faqTitle: 'BEEP TIMER QUESTIONS',
+      faq: [
+        ['Can I get a beep every minute for an hour?', 'Yes: set Work to 1:00 and Rounds to 60. A session goes up to 99 rounds of up to 10 minutes each.'],
+        ['Does it keep beeping with the screen off?', 'The screen stays on during a session so the beeps keep going. If you lock the phone, the browser pauses the page: the timer keeps counting and the beeps resume when you come back.'],
+        ['Does it work offline?', 'Yes. Once opened, or added to your home screen, it works without a connection.'],
+        ['Can I hear a 3-2-1 countdown before each beep?', 'Yes: turn on Countdown under Sound. It is off here so that each interval ends on a single beep.'],
+      ],
       chip: 'Beep',
       heading: 'Beep timer',
+      question: 'What is a beep timer?',
       title: 'Beep Timer: a beep every 30 s, every minute or any interval · BIP Timer',
       description:
         'Free online beep timer: a clean beep every 30 seconds, every minute or any interval, for workouts, pacing or study. No install, works offline.',
@@ -306,8 +376,35 @@ export const PRESETS = [
     },
     nl: {
       slug: 'piep-timer',
+      sections: [
+        [
+          'ZO GEBRUIK JE HEM',
+          [
+            'Stel het interval in met Inspanning: 30 s voor een piep elke halve minuut, 1:00 voor een piep elke minuut, tot 10 minuten.',
+            'Stel de duur in met Rondes: de timer piept één keer aan het einde van elke ronde, dus 60 rondes van 30 s zijn 30 minuten.',
+            'Druk op Starten en leg je telefoon neer: het scherm blijft aan, bij elk interval klinkt een piep en het scherm toont hoeveel rondes er nog zijn.',
+          ],
+        ],
+        [
+          'IDEEËN VOOR INTERVALLEN',
+          [
+            '<strong>Push-ups elke minuut</strong> (EMOM): 10 push-ups bij elke piep, rust tot de volgende.',
+            '<strong>Wisselende plank</strong>: voor, linkerzij, rechterzij, wisselen bij elke piep om de 30 s.',
+            '<strong>Looptempo</strong>: een piep elke 15 s om je tussentijd op de piste te checken.',
+            '<strong>Studeren of bureauwerk</strong>: een piep elke 5 minuten om op te kijken, te drinken of naar de volgende vraag te gaan.',
+          ],
+        ],
+      ],
+      faqTitle: 'VRAGEN OVER DE PIEP-TIMER',
+      faq: [
+        ['Kan ik een uur lang elke minuut een piep krijgen?', 'Ja: zet Inspanning op 1:00 en Rondes op 60. Een sessie gaat tot 99 rondes van maximaal 10 minuten elk.'],
+        ['Blijft hij piepen met het scherm uit?', 'Het scherm blijft aan tijdens een sessie, dus de piepjes gaan door. Vergrendel je de telefoon, dan zet de browser de pagina op pauze: de timer blijft tellen en de piepjes gaan verder als je terugkomt.'],
+        ['Werkt hij offline?', 'Ja. Eenmaal geopend, of op je beginscherm gezet, werkt hij zonder verbinding.'],
+        ['Kan ik een aftelling 3-2-1 voor elke piep horen?', 'Ja: zet Aftellen aan onder Geluid. Hier staat het uit, zodat elk interval eindigt op één enkele piep.'],
+      ],
       chip: 'Piep',
       heading: 'Piep-timer',
+      question: 'Wat is een piep-timer?',
       title: 'Piep-timer: een piep elke 30 s of elke minuut · BIP Timer',
       description:
         'Gratis online piep-timer: een duidelijke piep elke 30 seconden, elke minuut of met het interval dat je kiest, voor sport, tempo of studeren. Zonder installatie, werkt offline.',
@@ -320,3 +417,109 @@ export const PRESETS = [
     },
   },
 ];
+
+// The beep pages, one per common interval, built from a single description so they stay alike in
+// shape and differ in what each interval is good for.
+const INTERVALS = [
+  {
+    seconds: 10,
+    rounds: 60,
+    fr: { every: '10 secondes', slug: 'bip-toutes-les-10-secondes', total: '10 minutes', uses: 'Toutes les 10 secondes, c’est le rythme des exercices très courts : appuis rapides, touches de balle, changement de poste express ou cadence de respiration.' },
+    en: { every: '10 seconds', slug: 'beep-every-10-seconds', total: '10 minutes', uses: 'Every 10 seconds is the pace of very short drills: quick footwork, ball touches, a fast change of station or a breathing rhythm.' },
+    nl: { every: '10 seconden', slug: 'piep-elke-10-seconden', total: '10 minuten', uses: 'Elke 10 seconden is het ritme van heel korte oefeningen: snel voetenwerk, balcontacten, een snelle stationswissel of een ademritme.' },
+  },
+  {
+    seconds: 15,
+    rounds: 80,
+    fr: { every: '15 secondes', slug: 'bip-toutes-les-15-secondes', total: '20 minutes', uses: 'Toutes les 15 secondes convient aux sprints courts, aux efforts façon Tabata, aux changements de position en mobilité ou au contrôle d’allure sur piste.' },
+    en: { every: '15 seconds', slug: 'beep-every-15-seconds', total: '20 minutes', uses: 'Every 15 seconds suits short sprints, Tabata-style bursts, mobility switches or a pace check on the track.' },
+    nl: { every: '15 seconden', slug: 'piep-elke-15-seconden', total: '20 minuten', uses: 'Elke 15 seconden past bij korte sprints, Tabata-achtige inspanningen, wissels in mobiliteitsoefeningen of een tempocontrole op de piste.' },
+  },
+  {
+    seconds: 30,
+    rounds: 60,
+    fr: { every: '30 secondes', slug: 'bip-toutes-les-30-secondes', total: '30 minutes', uses: 'Toutes les 30 secondes, c’est le classique du gainage et des étirements tenus, des changements d’exercice en HIIT ou d’une allure à tenir en course.' },
+    en: { every: '30 seconds', slug: 'beep-every-30-seconds', total: '30 minutes', uses: 'Every 30 seconds is the classic for plank and stretching holds, HIIT exercise switches or a pace to hold when running.' },
+    nl: { every: '30 seconden', slug: 'piep-elke-30-seconden', total: '30 minuten', uses: 'Elke 30 seconden is de klassieker voor plank- en rekhoudingen, oefeningswissels in HIIT of een tempo om vast te houden bij het lopen.' },
+  },
+  {
+    seconds: 60,
+    rounds: 60,
+    fr: { every: 'minutes', slug: 'bip-toutes-les-minutes', total: 'une heure', uses: 'Chaque minute, c’est le rythme de l’EMOM : une série de pompes ou de squats à chaque bip, puis repos jusqu’à la minute suivante. Il sert aussi à rythmer une lecture ou un entraînement aux examens.' },
+    en: { every: 'minute', slug: 'beep-every-minute', total: 'an hour', uses: 'Every minute is the pace of EMOM: a set of push-ups or squats at each beep, then rest until the next minute. It also paces reading or exam practice.' },
+    nl: { every: 'minuut', slug: 'piep-elke-minuut', total: 'een uur', uses: 'Elke minuut is het ritme van EMOM: een reeks push-ups of squats bij elke piep, dan rust tot de volgende minuut. Hij geeft ook ritme aan lezen of examentraining.' },
+  },
+  {
+    seconds: 120,
+    rounds: 30,
+    fr: { every: '2 minutes', slug: 'bip-toutes-les-2-minutes', total: 'une heure', uses: 'Toutes les 2 minutes convient aux ateliers d’un circuit, au repos entre deux séries lourdes ou au rythme de questions d’entraînement.' },
+    en: { every: '2 minutes', slug: 'beep-every-2-minutes', total: 'an hour', uses: 'Every 2 minutes suits circuit stations, rest between heavy sets or a steady pace through practice questions.' },
+    nl: { every: '2 minuten', slug: 'piep-elke-2-minuten', total: 'een uur', uses: 'Elke 2 minuten past bij circuitstations, rust tussen zware reeksen of een vast ritme door oefenvragen.' },
+  },
+  {
+    seconds: 300,
+    rounds: 12,
+    fr: { every: '5 minutes', slug: 'bip-toutes-les-5-minutes', total: 'une heure', uses: 'Toutes les 5 minutes, c’est un rappel discret : redresser sa posture, boire, se lever du bureau, ou changer d’allure sur une longue sortie à vélo.' },
+    en: { every: '5 minutes', slug: 'beep-every-5-minutes', total: 'an hour', uses: 'Every 5 minutes is a gentle reminder: fix your posture, drink, get up from the desk, or change pace on a long bike ride.' },
+    nl: { every: '5 minuten', slug: 'piep-elke-5-minuten', total: 'een uur', uses: 'Elke 5 minuten is een zachte herinnering: je houding verbeteren, drinken, rechtstaan van je bureau of van tempo wisselen op een lange fietstocht.' },
+  },
+];
+
+const clock = (seconds) => (seconds < 60 ? `${seconds} s` : `${seconds / 60}:00`);
+
+const INTERVAL_WORDING = {
+  fr: (i, l) => ({
+    slug: l.slug,
+    chip: clock(i.seconds),
+    heading: `Un bip toutes les ${l.every}`,
+    question: `À quoi sert un bip toutes les ${l.every} ?`,
+    title: `Bip toutes les ${l.every} · minuteur bip gratuit · BIP Timer`,
+    description: `Un bip toutes les ${l.every}, en boucle pendant ${l.total} : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.`,
+    intro: `Un bip toutes les ${l.every}, pendant ${l.total}. Change la durée avec Tours, puis démarre.`,
+    body: [
+      l.uses,
+      `Réglage : un exercice, ${i.rounds} tours de ${clock(i.seconds)}, sans récupération et sans décompte 3-2-1, après 5 s de préparation. Chaque intervalle se termine sur un seul bip, et l’écran reste allumé jusqu’à la fin. Change l’intervalle avec Effort, la durée avec Tours.`,
+      'Besoin de plus qu’un bip ? C’est le même minuteur : ajoute des exercices, des récupérations, des séries ou des répétitions, et il déroule tout le bloc pour toi.',
+    ],
+  }),
+  en: (i, l) => ({
+    slug: l.slug,
+    chip: clock(i.seconds),
+    heading: `Beep every ${l.every}`,
+    question: `What is a beep every ${l.every} for?`,
+    title: `Beep every ${l.every} · free online beep timer · BIP Timer`,
+    description: `A beep every ${l.every}, on repeat for ${l.total}: free online beep timer for workouts, pacing or study. No install, works offline.`,
+    intro: `A beep every ${l.every}, for ${l.total}. Change the length with Rounds, then start.`,
+    body: [
+      l.uses,
+      `The setup: one exercise, ${i.rounds} rounds of ${clock(i.seconds)}, with no rest and no 3-2-1 countdown, after 5 s to get ready. Each interval ends on a single beep, and the screen stays on until the end. Change the interval with Work and the length with Rounds.`,
+      'Need more than a beep? It is the same timer: add exercises, rests, sets or reps, and it runs the whole block for you.',
+    ],
+  }),
+  nl: (i, l) => ({
+    slug: l.slug,
+    chip: clock(i.seconds),
+    heading: `Een piep elke ${l.every}`,
+    question: `Waarvoor dient een piep elke ${l.every}?`,
+    title: `Piep elke ${l.every} · gratis piep-timer · BIP Timer`,
+    description: `Een piep elke ${l.every}, ${l.total} lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.`,
+    intro: `Een piep elke ${l.every}, ${l.total} lang. Pas de duur aan met Rondes en start.`,
+    body: [
+      l.uses,
+      `De instelling: één oefening, ${i.rounds} rondes van ${clock(i.seconds)}, zonder rust en zonder aftellen 3-2-1, na 5 s voorbereiding. Elk interval eindigt op één enkele piep, en het scherm blijft aan tot het einde. Pas het interval aan met Inspanning en de duur met Rondes.`,
+      'Meer nodig dan een piep? Het is dezelfde timer: voeg oefeningen, rust, reeksen of herhalingen toe, en hij laat het hele blok voor je lopen.',
+    ],
+  }),
+};
+
+PRESETS.push(
+  ...INTERVALS.map((interval) => ({
+    picker: false,
+    group: 'beep',
+    settings: { structure: 'circuit', unit: 'time', exercises: 1, rounds: interval.rounds, prep: 5, effort: interval.seconds, recRound: 0, countdown: false },
+    ...Object.fromEntries(['fr', 'en', 'nl'].map((code) => [code, INTERVAL_WORDING[code](interval, interval[code])])),
+  })),
+);
+
+// The links between the beep pages: the beep timer and every interval.
+export const BEEP_LABEL = { fr: 'UN BIP RÉGULIER', en: 'A REGULAR BEEP', nl: 'EEN VASTE PIEP' };

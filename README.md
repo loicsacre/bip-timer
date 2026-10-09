@@ -38,18 +38,9 @@ The link-preview images (`og-image*.png`) are drawn from `icons/logo.svg` by `py
 
 ## Search
 
-`npm run seo` prints the Search Console report: the sitemap as Google last read it, the tracked queries, the top
-queries and pages of the last four weeks, and every page that is not indexed with the reason. Add `-- --submit-sitemap`
-to submit the sitemap again. Google's data runs two to three days behind.
-
-It reads a service account key, kept out of the repository at `~/.config/bip-timer/search-console.json` (or the path
-in `GSC_KEY`). To create one: in Google Cloud, enable the **Google Search Console API** in a project, create a service
-account and download a JSON key for it; then in Search Console, **Settings > Users and permissions**, add the account's
-e-mail, with **Restricted** access for the report or **Full** to submit the sitemap.
-
-`npm run indexnow`, once a deploy is live, tells Bing and the other IndexNow engines that every page changed. The
-key is public by design: it is in `tools/indexnow.mjs` and served as `<key>.txt` at the root. Google ignores IndexNow
-and asking it to index a page stays a manual step in Search Console.
+Search Console reports, sitemap submission and the IndexNow ping are done with seo-kit
+(`~/projects/seo-kit`: `seo-kit audit biptimer.app`, `seo-kit submit biptimer.app`). The IndexNow key stays
+served at the root as `<key>.txt`; it is public by design.
 
 ## Publish
 

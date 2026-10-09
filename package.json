@@ -4,8 +4,6 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "pages": "node tools/pages.mjs",
-    "seo": "node tools/seo.mjs",
-    "indexnow": "node tools/indexnow.mjs"
+    "pages": "node tools/pages.mjs"
   }
 }

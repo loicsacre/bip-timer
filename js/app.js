@@ -2,7 +2,7 @@ import { SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted 
 import { Run } from './run.js';
 import { allowSleep, keepAwake, signal, silentSwitch, unlockAudio, wakeLockSupported } from './device.js';
 import { track } from './analytics.js';
-import { LANGUAGES, lang, setLanguage, t } from './i18n.js';
+import { LANGUAGES, homePath, lang, setLanguage, t } from './i18n.js';
 import { FIELDS, OWN_VALUES, clamp, normalized, ownValues, sanitize, varies, withoutOwnValues } from './settings.js';
 import { settingsFromQuery, settingsToQuery } from './share.js';
 
@@ -825,7 +825,7 @@ function showGuide(open) {
 // The phone's own share sheet where there is one; elsewhere the link is copied, and the button says so.
 async function shareSession(button) {
   // To the main page of the language, where the session received is kept.
-  const url = `${new URL(`../${lang}/`, import.meta.url).href}?${settingsToQuery(state.settings)}`;
+  const url = `${new URL(`../${homePath(lang)}`, import.meta.url).href}?${settingsToQuery(state.settings)}`;
 
   track('share');
 
@@ -877,7 +877,7 @@ const ACTIONS = {
     const alternate = document.querySelector(`link[rel="alternate"][hreflang="${button.dataset.value}"]`);
 
     setLanguage(button.dataset.value);
-    location.href = alternate ? new URL(alternate.href).pathname : new URL(`../${button.dataset.value}/`, import.meta.url).href;
+    location.href = alternate ? new URL(alternate.href).pathname : new URL(`../${homePath(button.dataset.value)}`, import.meta.url).href;
   },
   start,
   settings: () => {

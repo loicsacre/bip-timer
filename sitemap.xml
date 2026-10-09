@@ -3,21 +3,21 @@
   <url>
     <loc>https://biptimer.app/fr/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/" />
   </url>
   <url>
-    <loc>https://biptimer.app/en/</loc>
+    <loc>https://biptimer.app/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/" />
   </url>
   <url>
     <loc>https://biptimer.app/nl/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/" />
   </url>

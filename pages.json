@@ -1,8 +1,8 @@
 [
-  "./",
   "./fr/",
-  "./en/",
+  "./",
   "./nl/",
+  "./en/",
   "./fr/minuteur-tabata/",
   "./en/tabata-timer/",
   "./nl/tabata-timer/",

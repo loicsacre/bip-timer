@@ -383,8 +383,11 @@ const LANGUAGE_KEY = 'bip-timer-language';
 
 export const LANGUAGES = ['fr', 'en', 'nl'];
 
+// English lives at the root, the address Google already ranks; the others have their own folder.
+export const homePath = (code) => (code === 'en' ? '' : `${code}/`);
+
 // The language of the last page used, or null for a first visit or blocked storage.
-export function savedLanguage() {
+function savedLanguage() {
   try {
     const saved = localStorage.getItem(LANGUAGE_KEY);
 

@@ -76,8 +76,8 @@ music. Vibration is Android only.
 - `js/run.js`: the run, computed from absolute timestamps so it never drifts.
 - `js/device.js`: sound (Web Audio), vibration, screen wake lock.
 - `js/app.js`: the four screens (setup, help, session, end), in one column on a phone and two on a wide screen.
-- `js/i18n.js`: French, English and Dutch; each has its own page. The root lists them, and goes straight to the last
-  one used (or, in the installed app, the browser's language).
+- `js/i18n.js`: French, English and Dutch; English is the root page, French and Dutch have `/fr/` and `/nl/`. The root
+  sends a visitor whose last or browser language is French or Dutch on to that page; `/en/` only forwards to the root.
 - `js/guide.js`: the how-to, written into each page by the generator; the help button reveals it.
 - `js/settings.js`: the setup's bounds and validation, applied to storage, format pages and shared links alike.
 - `js/share.js`: a session written into the address and read back (`?structure=circuit&unit=time&exercises=4…`).

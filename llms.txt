@@ -22,7 +22,7 @@ A free interval timer that runs in the browser, in French, English and Dutch. It
 
 ## English
 
-- [BIP Timer · Free interval timer: HIIT, circuit, sets](https://biptimer.app/en/): Interval timer for a whole block: exercises, rounds and rests. Set in ten seconds, started in one tap. No install, works offline.
+- [BIP Timer · Free interval timer: HIIT, circuit, sets](https://biptimer.app/): Interval timer for a whole block: exercises, rounds and rests. Set in ten seconds, started in one tap. No install, works offline.
 - [Free Tabata timer: 8 rounds of 20 s / 10 s · BIP Timer](https://biptimer.app/en/tabata-timer/): Ready-made Tabata timer: 8 rounds of 20 s work and 10 s rest, with beeps and colours you can read from afar. Free, no install.
 - [Free online HIIT timer: circuit, rounds and rests · BIP Timer](https://biptimer.app/en/hiit-timer/): Online HIIT timer: several exercises, 40 s work, 20 s between exercises, 60 s between rounds. Beeps, a screen you read from afar, free and no install.
 - [Circuit training timer: several exercises and rounds · BIP Timer](https://biptimer.app/en/circuit-training-timer/): Circuit training timer: up to 30 exercises, rest between exercises and between rounds, a work time of its own for each exercise. Free, in the browser.

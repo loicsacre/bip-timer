@@ -1,11 +1,11 @@
-// Writes one page per language, the language chooser at the root, the sitemap, robots.txt and llms.txt.
+// Writes one page per language (English at the root), the format pages, the sitemap, robots.txt and llms.txt.
 // Run `npm run pages` after changing a string, the site address or this file.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { guideSections } from '../js/guide.js';
-import { LANGUAGES, STRINGS } from '../js/i18n.js';
+import { LANGUAGES, STRINGS, homePath } from '../js/i18n.js';
 
 import { BEEP_LABEL, FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL } from './presets.mjs';
 
@@ -105,7 +105,6 @@ const website = {
   publisher,
 };
 
-const mainPath = (code) => `${code}/`;
 const presetPath = (code, preset) => `${code}/${preset[code].slug}/`;
 
 // Every page links to every format and every beep page, so each can be reached and ranked: the
@@ -119,7 +118,7 @@ function formatsSection(code, current) {
 
   return (
     group(PRESETS_LABEL[code], [
-      link(mainPath(code), FREE_SETUP_LABEL[code]),
+      link(homePath(code), FREE_SETUP_LABEL[code]),
       ...training.map((preset) => link(presetPath(code, preset), preset[code].heading)),
     ]) + group(BEEP_LABEL[code], beep.map((preset) => link(presetPath(code, preset), preset[code].heading)))
   );
@@ -138,17 +137,29 @@ function formatText(format) {
   return [`<section><h3 class="mono">${format.question}</h3>${paragraphs(format.body)}</section>`, ...sections, faq].join('');
 }
 
+// The root is the English page: readers of another language go on to theirs, crawlers stay.
+const sendOn = `
+    <script type="module">
+      import { homePath, preferredLanguage } from './js/i18n.js';
+
+      const code = preferredLanguage();
+
+      if (code !== 'en') {
+        location.replace(\`\${homePath(code)}\${location.search}\`);
+      }
+    </script>`;
+
 // The page data is JSON inside a single-quoted attribute: only & and ' need escaping.
 const attribute = (value) => JSON.stringify(value).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
 
 function languagePage(code, preset = null) {
   const t = STRINGS[code];
   const format = preset?.[code];
-  const path = preset ? presetPath(code, preset) : mainPath(code);
-  const root = preset ? '../../' : '../';
+  const path = preset ? presetPath(code, preset) : homePath(code);
+  const root = '../'.repeat(path.split('/').filter(Boolean).length);
   const address = `${SITE}${path}`;
   const meta = { ...META[code], ...(format && { title: format.title, description: format.description }) };
-  const paths = Object.fromEntries(LANGUAGES.map((other) => [other, preset ? presetPath(other, preset) : mainPath(other)]));
+  const paths = Object.fromEntries(LANGUAGES.map((other) => [other, preset ? presetPath(other, preset) : homePath(other)]));
   const links = alternates(paths, preset ? paths.en : '');
   const application = {
     '@context': 'https://schema.org',
@@ -167,7 +178,7 @@ function languagePage(code, preset = null) {
   const picker = {
     label: PICKER_LABEL[code],
     links: [
-      { label: FREE_CHIP[code], href: `/${mainPath(code)}` },
+      { label: FREE_CHIP[code], href: `/${homePath(code)}` },
       ...PRESETS.filter((other) => other.picker !== false).map((other) => ({ label: other[code].chip, href: `/${presetPath(code, other)}` })),
     ].map((link) => ({ ...link, current: link.href === `/${path}` })),
   };
@@ -187,7 +198,7 @@ ${sharing({ address, ...meta })}
     <script type="application/ld+json">${JSON.stringify([website, application])}</script>
     <link rel="preload" href="${root}fonts/SairaCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="${root}css/style.css" />
-    <script data-goatcounter="https://biptimer.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://biptimer.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>${path ? '' : sendOn}
   </head>
   <body>
     <main id="app"${data}>
@@ -212,42 +223,20 @@ ${sharing({ address, ...meta })}
 `;
 }
 
-// The root lists the languages. Only a visitor who already used one, or the installed app, is sent on
-// at once: a crawler has neither, so the root stays a page of its own instead of a copy of /en/.
-function chooserPage() {
-  const meta = META.fr;
-  const links = LANGUAGES.map(
-    (code) => `<a href="${code}/" hreflang="${code}" lang="${code}"><strong>${META[code].name}</strong><span>${META[code].description}</span></a>`,
-  ).join('\n        ');
-  const paths = Object.fromEntries(LANGUAGES.map((code) => [code, mainPath(code)]));
-
+// English moved from /en/ to the root: links and shares to the old address still land there, query
+// included. GitHub Pages has no server redirect, so the page does it.
+function movedPage() {
   return `<!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
-${head({ root: '', title: 'BIP Timer · Minuteur d’intervalles · Interval timer', description: meta.description, address: SITE, links: alternates(paths, '') })}
-${sharing({ address: SITE, ...meta })}
-    <style>
-      body { margin: 0; min-height: 100dvh; display: grid; place-content: center; gap: 24px; padding: 24px 16px; box-sizing: border-box; background: #0e0d0b; color: #eae6dd; font: 16px/1.4 system-ui, sans-serif; text-align: center; }
-      h1 { margin: 0; }
-      nav { display: grid; gap: 12px; max-width: 520px; }
-      a { display: grid; gap: 4px; padding: 16px; border: 1px solid rgba(234, 230, 221, 0.25); border-radius: 12px; color: inherit; text-decoration: none; }
-      a:hover, a:focus-visible { border-color: #eae6dd; }
-      span { color: rgba(234, 230, 221, 0.7); font-size: 14px; }
-    </style>
-    <script type="application/ld+json">${JSON.stringify(website)}</script>
-    <script type="module">
-      import { preferredLanguage, savedLanguage } from './js/i18n.js';
-
-      if (savedLanguage() || matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-        location.replace(\`\${preferredLanguage()}/\${location.search}\`);
-      }
-    </script>
+    <meta charset="utf-8" />
+    <title>BIP Timer</title>
+    <link rel="canonical" href="${SITE}" />
+    <script>location.replace('/' + location.search);</script>
+    <meta http-equiv="refresh" content="0; url=/" />
   </head>
   <body>
-    <h1>BIP Timer</h1>
-    <nav>
-        ${links}
-    </nav>
+    <a href="/">BIP Timer</a>
   </body>
 </html>
 `;
@@ -255,7 +244,7 @@ ${sharing({ address: SITE, ...meta })}
 
 function sitemap() {
   const groups = [
-    { paths: Object.fromEntries(LANGUAGES.map((code) => [code, mainPath(code)])), fallback: '' },
+    { paths: Object.fromEntries(LANGUAGES.map((code) => [code, homePath(code)])), fallback: '' },
     ...PRESETS.map((preset) => {
       const paths = Object.fromEntries(LANGUAGES.map((code) => [code, presetPath(code, preset)]));
 
@@ -288,7 +277,7 @@ function llms() {
     [
       `## ${META[code].name}`,
       '',
-      entry(mainPath(code), META[code].title, META[code].description),
+      entry(homePath(code), META[code].title, META[code].description),
       ...PRESETS.map((preset) => entry(presetPath(code, preset), preset[code].title, preset[code].description)),
     ].join('\n'),
   );
@@ -305,8 +294,8 @@ ${sections.join('\n\n')}
 
 export function pages() {
   const html = {
-    'index.html': chooserPage(),
-    ...Object.fromEntries(LANGUAGES.map((code) => [`${code}/index.html`, languagePage(code)])),
+    ...Object.fromEntries(LANGUAGES.map((code) => [`${homePath(code)}index.html`, languagePage(code)])),
+    'en/index.html': movedPage(),
     ...Object.fromEntries(
       PRESETS.flatMap((preset) => LANGUAGES.map((code) => [`${presetPath(code, preset)}index.html`, languagePage(code, preset)])),
     ),

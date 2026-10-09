@@ -992,6 +992,8 @@ window.addEventListener('appinstalled', () => track('app-installed'));
 // Safari only applies :active to a press when the page listens to touches.
 document.addEventListener('touchstart', () => {}, { passive: true });
 
+// Remembered so the root sends a returning visitor straight back to this language.
+setLanguage(lang);
 render();
 
 if ('serviceWorker' in navigator) {

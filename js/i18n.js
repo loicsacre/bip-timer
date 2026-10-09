@@ -383,16 +383,23 @@ const LANGUAGE_KEY = 'bip-timer-language';
 
 export const LANGUAGES = ['fr', 'en', 'nl'];
 
-// A language picked by hand wins; otherwise the first of the browser's languages we speak.
-export function preferredLanguage() {
+// The language of the last page used, or null for a first visit or blocked storage.
+export function savedLanguage() {
   try {
     const saved = localStorage.getItem(LANGUAGE_KEY);
 
-    if (STRINGS[saved]) {
-      return saved;
-    }
+    return STRINGS[saved] ? saved : null;
   } catch {
-    // Blocked storage falls back to the browser's languages.
+    return null;
+  }
+}
+
+// The language last used wins; otherwise the first of the browser's languages we speak.
+export function preferredLanguage() {
+  const saved = savedLanguage();
+
+  if (saved) {
+    return saved;
   }
 
   const tags = typeof navigator === 'undefined' ? [] : (navigator.languages ?? [navigator.language]);

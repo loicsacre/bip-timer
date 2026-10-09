@@ -212,10 +212,13 @@ ${sharing({ address, ...meta })}
 `;
 }
 
-// The root sends each visitor to their language; without JavaScript it is a list of links.
+// The root lists the languages. Only a visitor who already used one, or the installed app, is sent on
+// at once: a crawler has neither, so the root stays a page of its own instead of a copy of /en/.
 function chooserPage() {
   const meta = META.fr;
-  const links = LANGUAGES.map((code) => `<a href="${code}/" hreflang="${code}" lang="${code}">${META[code].name}</a>`).join('\n        ');
+  const links = LANGUAGES.map(
+    (code) => `<a href="${code}/" hreflang="${code}" lang="${code}"><strong>${META[code].name}</strong><span>${META[code].description}</span></a>`,
+  ).join('\n        ');
   const paths = Object.fromEntries(LANGUAGES.map((code) => [code, mainPath(code)]));
 
   return `<!doctype html>
@@ -224,15 +227,20 @@ function chooserPage() {
 ${head({ root: '', title: 'BIP Timer · Minuteur d’intervalles · Interval timer', description: meta.description, address: SITE, links: alternates(paths, '') })}
 ${sharing({ address: SITE, ...meta })}
     <style>
-      body { margin: 0; min-height: 100dvh; display: grid; place-content: center; gap: 16px; background: #0e0d0b; color: #eae6dd; font: 16px system-ui, sans-serif; text-align: center; }
-      nav { display: flex; gap: 24px; justify-content: center; }
-      a { color: inherit; }
+      body { margin: 0; min-height: 100dvh; display: grid; place-content: center; gap: 24px; padding: 24px 16px; box-sizing: border-box; background: #0e0d0b; color: #eae6dd; font: 16px/1.4 system-ui, sans-serif; text-align: center; }
+      h1 { margin: 0; }
+      nav { display: grid; gap: 12px; max-width: 520px; }
+      a { display: grid; gap: 4px; padding: 16px; border: 1px solid rgba(234, 230, 221, 0.25); border-radius: 12px; color: inherit; text-decoration: none; }
+      a:hover, a:focus-visible { border-color: #eae6dd; }
+      span { color: rgba(234, 230, 221, 0.7); font-size: 14px; }
     </style>
     <script type="application/ld+json">${JSON.stringify(website)}</script>
     <script type="module">
-      import { preferredLanguage } from './js/i18n.js';
+      import { preferredLanguage, savedLanguage } from './js/i18n.js';
 
-      location.replace(\`\${preferredLanguage()}/\${location.search}\`);
+      if (savedLanguage() || matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+        location.replace(\`\${preferredLanguage()}/\${location.search}\`);
+      }
     </script>
   </head>
   <body>

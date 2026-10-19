@@ -1,6 +1,6 @@
 import { SECONDS_PER_REPETITION, StepKind, buildSteps, exerciseValue, isCounted } from './sequence.js';
 import { Run } from './run.js';
-import { allowSleep, keepAwake, signal, silentSwitch, unlockAudio, wakeLockSupported } from './device.js';
+import { allowSleep, feelLimit, keepAwake, signal, silentSwitch, unlockAudio, wakeLockSupported } from './device.js';
 import { track } from './analytics.js';
 import { LANGUAGES, homePath, lang, setLanguage, t } from './i18n.js';
 import { FIELDS, OWN_VALUES, clamp, normalized, ownValues, sanitize, varies, withoutOwnValues } from './settings.js';
@@ -14,7 +14,8 @@ const PREFERENCES = ['sound', 'throughSilent', 'countdown'];
 const PHASE_COLORS = { prep: 'var(--phase-prep)', effort: 'var(--phase-effort)', recovery: 'var(--phase-recovery)' };
 
 const HOLD_DELAY = 450;
-const HOLD_INTERVAL = 90;
+// Holding longer goes faster: ten minutes of rest is five seconds away instead of eleven.
+const holdInterval = (repeats) => (repeats < 8 ? 90 : repeats < 20 ? 60 : 35);
 
 const app = document.getElementById('app');
 
@@ -906,7 +907,6 @@ let hold = null;
 function stopHold() {
   if (hold) {
     clearTimeout(hold.timer);
-    clearInterval(hold.repeat);
   }
 }
 
@@ -921,14 +921,21 @@ app.addEventListener('pointerdown', (event) => {
 
   const { step: key, direction } = button.dataset;
 
-  hold = { key, held: false };
-  hold.timer = setTimeout(() => {
-    hold.held = true;
-    hold.repeat = setInterval(() => {
-      if (!stepSetting(key, Number(direction))) {
-        stopHold();
-      }
-    }, HOLD_INTERVAL);
+  const current = { key, held: false };
+  const repeat = (repeats) => {
+    if (!stepSetting(key, Number(direction))) {
+      feelLimit();
+
+      return;
+    }
+
+    current.timer = setTimeout(() => repeat(repeats + 1), holdInterval(repeats));
+  };
+
+  hold = current;
+  current.timer = setTimeout(() => {
+    current.held = true;
+    repeat(0);
   }, HOLD_DELAY);
 });
 

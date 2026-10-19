@@ -735,12 +735,12 @@ button:focus-visible {
   border-top: 1px solid var(--line);
 }
 
-/* Session: the whole screen takes the phase colour, read before any word is. */
+/* Session: the whole screen takes the phase colour, read before any word is. It changes on the
+   same frame as the beep, never fading in after it. */
 
 .session {
   background: var(--phase);
   color: var(--ink);
-  transition: background 0.25s;
 }
 
 /* A dark band under the status bar keeps the phone's own clock readable on a light phase. */
@@ -1349,9 +1349,8 @@ button > * {
   }
 }
 
-/* Phase changes and pauses snap instead of fading for anyone who asked the system for less motion. */
+/* Pauses snap instead of fading for anyone who asked the system for less motion. */
 @media (prefers-reduced-motion: reduce) {
-  .session,
   .session .content,
   button {
     transition: none;

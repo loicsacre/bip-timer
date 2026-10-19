@@ -81,6 +81,11 @@ const VIBRATIONS = {
   finish: [200, 100, 200],
 };
 
+// A held stepper that reaches its bound: a short knock under the finger, where the phone can vibrate.
+export function feelLimit() {
+  navigator.vibrate?.(15);
+}
+
 export function signal(name, { sound, throughSilent = false }) {
   navigator.vibrate?.(VIBRATIONS[name]);
 

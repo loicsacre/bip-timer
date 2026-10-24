@@ -28,6 +28,15 @@ export class Run {
     return this.pausedAt !== null;
   }
 
+  // The share of the steps already behind, from 0 before the first is over to 1 once all are.
+  get progress() {
+    if (this.finished || this.steps.length === 0) {
+      return 1;
+    }
+
+    return this.index / this.steps.length;
+  }
+
   start() {
     const now = this.now();
 

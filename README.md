@@ -74,6 +74,7 @@ music. Vibration is Android only.
 - `js/share.js`: a session written into the address and read back (`?structure=circuit&unit=time&exercises=4…`).
 - `tools/presets.mjs`: the format pages (Tabata, HIIT, circuit training, 30/30, strength by sets) in each language.
 - `js/analytics.js`: anonymous counts sent to GoatCounter (https://biptimer.goatcounter.com): page views, sessions
-  started and finished per format (`session-start/circuit-time`…), installs. No cookie, nothing personal; localhost is
+  started, finished and quit per format (`session-start/circuit-time`…; a quit carries the tenth of the steps done,
+  `session-quit/circuit-time/30`), shares, installs. No cookie, nothing personal; localhost is
   never counted.
 - Fonts: Archivo, Saira Condensed, IBM Plex Mono (SIL Open Font License, see `fonts/`).

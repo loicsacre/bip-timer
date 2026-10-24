@@ -731,6 +731,8 @@ function closeConfirm(leave) {
   state.confirm = false;
 
   if (leave) {
+    // In tenths, so a run quit early reads apart from a loop stopped near its end.
+    track(`session-quit/${format(state.runSettings)}/${Math.floor(state.run.progress * 10) * 10}`);
     state.run = null;
     state.screen = 'setup';
     allowSleep();

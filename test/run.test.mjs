@@ -138,6 +138,24 @@ describe('the commands', () => {
     assert.equal(current.elapsed(), 40_000);
     assert.ok(signals.includes('finish'));
   });
+
+  test('progress counts the steps left behind, up to the whole run once finished', () => {
+    const current = run({ rounds: 2 });
+    const total = current.steps.length;
+
+    assert.equal(current.progress, 0);
+
+    current.next();
+
+    assert.equal(current.progress, 1 / total);
+
+    for (let step = 1; step < total; step += 1) {
+      current.next();
+    }
+
+    assert.equal(current.finished, true);
+    assert.equal(current.progress, 1);
+  });
 });
 
 describe('the signals', () => {

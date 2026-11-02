@@ -523,3 +523,133 @@ PRESETS.push(
 
 // The links between the beep pages: the beep timer and every interval.
 export const BEEP_LABEL = { fr: 'UN BIP RÉGULIER', en: 'A REGULAR BEEP', nl: 'EEN VASTE PIEP' };
+
+// For people whose timer app went paid. Facts about another app stay dated and checkable against its
+// store page, and its name is only used to compare.
+PRESETS.push({
+  picker: false,
+  group: 'switch',
+  settings: { structure: 'circuit', unit: 'time', exercises: 4, rounds: 4, prep: 10, effort: 30, recExercise: 10, recRound: 20 },
+  fr: {
+    slug: 'alternative-timer-plus',
+    chip: 'Timer Plus',
+    heading: 'Une alternative gratuite à Timer Plus',
+    question: 'Timer Plus n’est plus gratuit : et maintenant ?',
+    title: 'Alternative gratuite à Timer Plus, sans abonnement · BIP Timer',
+    description:
+      'Timer Plus demande maintenant un abonnement. BIP Timer est une alternative gratuite : exercices, récupérations et tours, sans compte, sans pub, sans installation.',
+    intro: 'Déjà réglé comme une routine Timer Plus classique : 4 exercices de 30 s, 10 s de récup, 20 s entre les tours, 4 tours. Démarre, ou ajuste avant.',
+    body: [
+      'En octobre 2026, Timer Plus – Workouts Timer s’est mis à demander un paiement avant de lancer un minuteur : 2,99 $ par mois, ou 19,99 $ pour un accès à vie, d’après sa page sur l’App Store. Si tu as seulement besoin d’un minuteur d’intervalles pour ton cours ou tes séances, tu n’as pas à payer.',
+      'BIP Timer déroule le même genre de bloc dans le navigateur, gratuitement, sans compte et sans publicité : plusieurs exercices, un temps d’effort, une récupération entre les exercices, une récupération plus longue entre les tours, et autant de tours que tu veux. Il est réglé ici sur une routine que beaucoup faisaient avec Timer Plus : 4 exercices de 30 s, 10 s entre les exercices, 20 s après chaque tour, 4 tours.',
+      'Timer Plus est une marque de son propriétaire. BIP Timer est un projet indépendant, sans lien avec Timer Plus ni avec son éditeur.',
+    ],
+    sections: [
+      [
+        'LA MÊME SÉANCE, RÉGLÉE EN DIX SECONDES',
+        [
+          '<strong>Exercices</strong> : le nombre d’exercices d’un tour, par exemple 4.',
+          '<strong>Effort</strong> : la durée de chaque exercice. Avec « Par exercice », chacun peut avoir la sienne.',
+          '<strong>Récup. exercices</strong> : la pause entre deux exercices. <strong>Récup. tours</strong> : la pause plus longue après chaque tour.',
+          '<strong>Tours</strong> : combien de fois le bloc se répète. Puis Démarrer : un bip à chaque changement, un décompte 3-2-1, et l’écran change de couleur à chaque phase.',
+        ],
+      ],
+      [
+        'CE QUI EST PAREIL, CE QUI NE L’EST PAS',
+        [
+          'Pareil : temps d’effort et de récupération, tours, bips et décompte, écran qui reste allumé, et ça marche hors ligne une fois ouvert.',
+          'Pas là : pas d’app Apple Watch, pas d’annonces vocales, pas de liste d’entraînements enregistrés. À la place, « Partager ce réglage » donne un lien qui rouvre ta séance telle quelle : garde-le en favori ou sur l’écran d’accueil. Et si tu verrouilles le téléphone, les bips s’arrêtent jusqu’à ton retour.',
+        ],
+      ],
+    ],
+    faqTitle: 'QUESTIONS SUR LE PASSAGE À BIP TIMER',
+    faq: [
+      ['Peut-on encore utiliser Timer Plus gratuitement ?', 'Cela dépend de son éditeur : l’App Store affiche un abonnement mensuel et un achat à vie. BIP Timer n’a ni l’un ni l’autre : il est gratuit, sans publicité et sans compte.'],
+      ['Faut-il recréer mes entraînements ?', 'Oui, il n’y a pas d’import. Un bloc se règle en une dizaine de secondes, puis « Partager ce réglage » te donne un lien pour le retrouver.'],
+      ['Est-ce vraiment gratuit ?', 'Oui : pas d’abonnement, pas de publicité, pas de compte. Tes réglages restent sur ton téléphone.'],
+      ['Ça marche sur iPhone et Android ?', 'Oui, dans le navigateur. Ajoute-le à l’écran d’accueil pour l’ouvrir comme une app, même sans connexion.'],
+    ],
+  },
+  en: {
+    slug: 'timer-plus-alternative',
+    chip: 'Timer Plus',
+    heading: 'A free Timer Plus alternative',
+    question: 'Timer Plus is no longer free: what now?',
+    title: 'Timer Plus alternative: free interval timer, no subscription · BIP Timer',
+    description:
+      'Timer Plus now asks for a subscription. BIP Timer is a free alternative: exercises, rests and rounds, with no account, no ads and no install.',
+    intro: 'Already set like a classic Timer Plus routine: 4 exercises of 30 s, 10 s rest, 20 s between rounds, 4 rounds. Start, or adjust first.',
+    body: [
+      'In October 2026, Timer Plus – Workouts Timer started asking for payment before a timer will start: $2.99 a month, or $19.99 for lifetime access, according to its App Store page. If all you need is an interval timer for your class or your own workouts, you do not have to pay.',
+      'BIP Timer runs the same kind of block in the browser, for free, with no account and no ads: several exercises, a work time, a rest between exercises, a longer rest between rounds and as many rounds as you like. It is set here to a routine many people ran in Timer Plus: 4 exercises of 30 s, 10 s between exercises, 20 s after each round, 4 rounds.',
+      'Timer Plus is a trademark of its owner. BIP Timer is an independent project, not affiliated with Timer Plus or its developer.',
+    ],
+    sections: [
+      [
+        'THE SAME WORKOUT, SET UP IN TEN SECONDS',
+        [
+          '<strong>Exercises</strong>: how many exercises make one round, for example 4.',
+          '<strong>Work</strong>: how long each exercise lasts. With “Per exercise”, each one can have its own.',
+          '<strong>Rest exercises</strong>: the break between two exercises. <strong>Rest rounds</strong>: the longer break after each round.',
+          '<strong>Rounds</strong>: how many times the block repeats. Then Start: a beep at every change, a 3-2-1 countdown, and the screen changes colour with each phase.',
+        ],
+      ],
+      [
+        'WHAT IS THE SAME, WHAT IS NOT',
+        [
+          'The same: work and rest times, rounds, beeps and countdown, a screen that stays on, and it works offline once opened.',
+          'Not there: no Apple Watch app, no voice announcements, no list of saved workouts. Instead, “Share this setup” gives you a link that reopens your workout as you left it: bookmark it or put it on your home screen. And if you lock the phone, the beeps stop until you come back.',
+        ],
+      ],
+    ],
+    faqTitle: 'SWITCHING TO BIP TIMER',
+    faq: [
+      ['Can I keep using Timer Plus for free?', 'That is up to its developer: the App Store lists a monthly subscription and a lifetime purchase. BIP Timer has neither: it is free, with no ads and no account.'],
+      ['Do I have to recreate my workouts?', 'Yes, there is no import. A block takes about ten seconds to set up, then “Share this setup” gives you a link to get back to it.'],
+      ['Is it really free?', 'Yes: no subscription, no ads, no account. Your settings stay on your phone.'],
+      ['Does it work on iPhone and Android?', 'Yes, in the browser. Add it to your home screen to open it like an app, even without a connection.'],
+    ],
+  },
+  nl: {
+    slug: 'timer-plus-alternatief',
+    chip: 'Timer Plus',
+    heading: 'Een gratis alternatief voor Timer Plus',
+    question: 'Timer Plus is niet meer gratis: wat nu?',
+    title: 'Gratis alternatief voor Timer Plus, zonder abonnement · BIP Timer',
+    description:
+      'Timer Plus vraagt nu een abonnement. BIP Timer is een gratis alternatief: oefeningen, rust en rondes, zonder account, zonder reclame, zonder installatie.',
+    intro: 'Al ingesteld als een klassieke Timer Plus-routine: 4 oefeningen van 30 s, 10 s rust, 20 s tussen de rondes, 4 rondes. Start, of pas eerst aan.',
+    body: [
+      'In oktober 2026 begon Timer Plus – Workouts Timer te vragen om te betalen voor een timer start: $2,99 per maand, of $19,99 voor levenslange toegang, volgens de App Store-pagina. Heb je alleen een intervaltimer nodig voor je les of je eigen trainingen, dan hoef je niet te betalen.',
+      'BIP Timer doet hetzelfde soort blok in de browser, gratis, zonder account en zonder reclame: meerdere oefeningen, een inspanningstijd, rust tussen de oefeningen, een langere rust tussen de rondes en zoveel rondes als je wilt. Hij staat hier op een routine die velen in Timer Plus deden: 4 oefeningen van 30 s, 10 s tussen de oefeningen, 20 s na elke ronde, 4 rondes.',
+      'Timer Plus is een merk van zijn eigenaar. BIP Timer is een onafhankelijk project, niet verbonden aan Timer Plus of de ontwikkelaar ervan.',
+    ],
+    sections: [
+      [
+        'DEZELFDE TRAINING, INGESTELD IN TIEN SECONDEN',
+        [
+          '<strong>Oefeningen</strong>: hoeveel oefeningen één ronde vormen, bijvoorbeeld 4.',
+          '<strong>Inspanning</strong>: hoe lang elke oefening duurt. Met „Per oefening” krijgt elke oefening haar eigen tijd.',
+          '<strong>Rust oefeningen</strong>: de pauze tussen twee oefeningen. <strong>Rust rondes</strong>: de langere pauze na elke ronde.',
+          '<strong>Rondes</strong>: hoe vaak het blok zich herhaalt. Dan Starten: een piep bij elke wissel, een aftelling 3-2-1, en het scherm verandert van kleur bij elke fase.',
+        ],
+      ],
+      [
+        'WAT HETZELFDE IS, WAT NIET',
+        [
+          'Hetzelfde: inspannings- en rusttijden, rondes, piepjes en aftellen, een scherm dat aan blijft, en hij werkt offline zodra hij geopend is.',
+          'Niet aanwezig: geen Apple Watch-app, geen gesproken aankondigingen, geen lijst met opgeslagen trainingen. In de plaats geeft „Deel deze instelling” je een link die je training opent zoals je ze liet: bewaar hem als bladwijzer of op je beginscherm. En vergrendel je de telefoon, dan stoppen de piepjes tot je terugkomt.',
+        ],
+      ],
+    ],
+    faqTitle: 'OVERSTAPPEN NAAR BIP TIMER',
+    faq: [
+      ['Kan ik Timer Plus nog gratis gebruiken?', 'Dat beslist de ontwikkelaar: de App Store toont een maandabonnement en een levenslange aankoop. BIP Timer heeft geen van beide: hij is gratis, zonder reclame en zonder account.'],
+      ['Moet ik mijn trainingen opnieuw maken?', 'Ja, er is geen import. Een blok stel je in een tiental seconden in, daarna geeft „Deel deze instelling” je een link om het terug te vinden.'],
+      ['Is het echt gratis?', 'Ja: geen abonnement, geen reclame, geen account. Je instellingen blijven op je telefoon.'],
+      ['Werkt het op iPhone en Android?', 'Ja, in de browser. Zet hem op je beginscherm om hem als een app te openen, ook zonder verbinding.'],
+    ],
+  },
+});
+
+export const SWITCH_LABEL = { fr: 'EN VENANT D’UNE AUTRE APP', en: 'SWITCHING FROM ANOTHER APP', nl: 'OVERSTAPPEN VAN EEN ANDERE APP' };

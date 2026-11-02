@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { guideSections } from '../js/guide.js';
 import { LANGUAGES, STRINGS, homePath } from '../js/i18n.js';
 
-import { BEEP_LABEL, FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL } from './presets.mjs';
+import { BEEP_LABEL, FREE_CHIP, FREE_SETUP_LABEL, PICKER_LABEL, PRESETS, PRESETS_LABEL, SWITCH_LABEL } from './presets.mjs';
 
 // The only place the address lives: change it here when the site moves to its own domain.
 export const SITE = 'https://biptimer.app/';
@@ -107,20 +107,19 @@ const website = {
 
 const presetPath = (code, preset) => `${code}/${preset[code].slug}/`;
 
-// Every page links to every format and every beep page, so each can be reached and ranked: the
-// training formats with the free setup, then the beep timer and its intervals.
+// Every page links to every other, so each can be reached and ranked: the training formats with the
+// free setup, then the beep timer and its intervals, then the pages for people leaving another app.
 function formatsSection(code, current) {
   const link = (path, label) =>
     path === current ? `<a href="/${path}" aria-current="page">${label}</a>` : `<a href="/${path}">${label}</a>`;
   const group = (label, links) => `<section class="formats"><h3 class="mono">${label}</h3><nav>${links.join('')}</nav></section>`;
-  const training = PRESETS.filter((preset) => preset.group !== 'beep');
-  const beep = PRESETS.filter((preset) => preset.group === 'beep');
+  const links = (name) =>
+    PRESETS.filter((preset) => preset.group === name).map((preset) => link(presetPath(code, preset), preset[code].heading));
 
   return (
-    group(PRESETS_LABEL[code], [
-      link(homePath(code), FREE_SETUP_LABEL[code]),
-      ...training.map((preset) => link(presetPath(code, preset), preset[code].heading)),
-    ]) + group(BEEP_LABEL[code], beep.map((preset) => link(presetPath(code, preset), preset[code].heading)))
+    group(PRESETS_LABEL[code], [link(homePath(code), FREE_SETUP_LABEL[code]), ...links(undefined)]) +
+    group(BEEP_LABEL[code], links('beep')) +
+    group(SWITCH_LABEL[code], links('switch'))
   );
 }
 

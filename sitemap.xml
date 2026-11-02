@@ -273,4 +273,25 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/piep-elke-5-minuten/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/beep-every-5-minutes/" />
   </url>
+  <url>
+    <loc>https://biptimer.app/fr/alternative-timer-plus/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/alternative-timer-plus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/timer-plus-alternative/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/timer-plus-alternatief/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/timer-plus-alternative/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/en/timer-plus-alternative/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/alternative-timer-plus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/timer-plus-alternative/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/timer-plus-alternatief/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/timer-plus-alternative/" />
+  </url>
+  <url>
+    <loc>https://biptimer.app/nl/timer-plus-alternatief/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://biptimer.app/fr/alternative-timer-plus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://biptimer.app/en/timer-plus-alternative/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://biptimer.app/nl/timer-plus-alternatief/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://biptimer.app/en/timer-plus-alternative/" />
+  </url>
 </urlset>

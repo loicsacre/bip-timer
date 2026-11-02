@@ -38,5 +38,8 @@
   "./nl/piep-elke-2-minuten/",
   "./fr/bip-toutes-les-5-minutes/",
   "./en/beep-every-5-minutes/",
-  "./nl/piep-elke-5-minuten/"
+  "./nl/piep-elke-5-minuten/",
+  "./fr/alternative-timer-plus/",
+  "./en/timer-plus-alternative/",
+  "./nl/timer-plus-alternatief/"
 ]

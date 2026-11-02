@@ -19,6 +19,7 @@ A free interval timer that runs in the browser, in French, English and Dutch. It
 - [Bip toutes les minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-minutes/): Un bip toutes les minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
 - [Bip toutes les 2 minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-2-minutes/): Un bip toutes les 2 minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
 - [Bip toutes les 5 minutes · minuteur bip gratuit · BIP Timer](https://biptimer.app/fr/bip-toutes-les-5-minutes/): Un bip toutes les 5 minutes, en boucle pendant une heure : minuteur bip gratuit en ligne, pour le sport, le rythme ou les révisions. Sans installation, hors ligne.
+- [Alternative gratuite à Timer Plus, sans abonnement · BIP Timer](https://biptimer.app/fr/alternative-timer-plus/): Timer Plus demande maintenant un abonnement. BIP Timer est une alternative gratuite : exercices, récupérations et tours, sans compte, sans pub, sans installation.
 
 ## English
 
@@ -35,6 +36,7 @@ A free interval timer that runs in the browser, in French, English and Dutch. It
 - [Beep every minute · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-minute/): A beep every minute, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
 - [Beep every 2 minutes · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-2-minutes/): A beep every 2 minutes, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
 - [Beep every 5 minutes · free online beep timer · BIP Timer](https://biptimer.app/en/beep-every-5-minutes/): A beep every 5 minutes, on repeat for an hour: free online beep timer for workouts, pacing or study. No install, works offline.
+- [Timer Plus alternative: free interval timer, no subscription · BIP Timer](https://biptimer.app/en/timer-plus-alternative/): Timer Plus now asks for a subscription. BIP Timer is a free alternative: exercises, rests and rounds, with no account, no ads and no install.
 
 ## Nederlands
 
@@ -51,3 +53,4 @@ A free interval timer that runs in the browser, in French, English and Dutch. It
 - [Piep elke minuut · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-minuut/): Een piep elke minuut, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
 - [Piep elke 2 minuten · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-2-minuten/): Een piep elke 2 minuten, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
 - [Piep elke 5 minuten · gratis piep-timer · BIP Timer](https://biptimer.app/nl/piep-elke-5-minuten/): Een piep elke 5 minuten, een uur lang: gratis online piep-timer voor sport, tempo of studeren. Zonder installatie, werkt offline.
+- [Gratis alternatief voor Timer Plus, zonder abonnement · BIP Timer](https://biptimer.app/nl/timer-plus-alternatief/): Timer Plus vraagt nu een abonnement. BIP Timer is een gratis alternatief: oefeningen, rust en rondes, zonder account, zonder reclame, zonder installatie.

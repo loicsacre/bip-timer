@@ -755,10 +755,15 @@ button:focus-visible {
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+/* A pause dims the run, not the top bar: the way out and the word saying the run is paused stay
+   at full strength. */
+.session .content > :not(.top) {
   transition: opacity 0.2s;
 }
 
-.session.paused .content {
+.session.paused .content > :not(.top) {
   opacity: 0.22;
 }
 
@@ -1351,7 +1356,7 @@ button > * {
 
 /* Pauses snap instead of fading for anyone who asked the system for less motion. */
 @media (prefers-reduced-motion: reduce) {
-  .session .content,
+  .session .content > :not(.top),
   button {
     transition: none;
   }

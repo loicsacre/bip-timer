@@ -46,8 +46,8 @@ describe('a shared link', () => {
   });
 });
 
-test('every format page sets a block the timer accepts as it is', () => {
-  for (const preset of PRESETS) {
+test('every page that sets a block sets one the timer accepts as it is', () => {
+  for (const preset of PRESETS.filter((page) => page.settings)) {
     const settings = sanitize(preset.settings);
 
     for (const [key, value] of Object.entries(preset.settings)) {

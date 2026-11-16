@@ -83,7 +83,7 @@ export const PRESETS = [
       chip: 'HIIT',
       heading: 'Minuteur HIIT',
       question: 'Qu’est-ce que le HIIT ?',
-      title: 'Minuteur HIIT gratuit en ligne : circuit, tours et récupérations · BIP Timer',
+      title: 'Minuteur HIIT gratuit : circuit, tours et récupérations · BIP Timer',
       description:
         'Minuteur HIIT en ligne : plusieurs exercices, 40 s d’effort, 20 s entre exercices, 60 s entre tours. Bips, écran lisible de loin, gratuit et sans installation.',
       intro: 'Réglé pour un HIIT en circuit : 4 exercices, 3 tours, 40 s d’effort. Ajuste, puis démarre.',
@@ -245,7 +245,7 @@ export const PRESETS = [
       chip: 'Muscu',
       heading: 'Minuteur musculation par séries',
       question: 'Comment chronométrer une séance de musculation ?',
-      title: 'Minuteur musculation : séries, répétitions et temps de repos · BIP Timer',
+      title: 'Minuteur musculation : séries, répétitions et repos · BIP Timer',
       description:
         'Minuteur de musculation par séries : il compte tes séries, attend ta validation après chaque série et chronomètre les temps de repos. Gratuit, sans installation.',
       intro: 'Réglé pour 3 exercices de 4 séries de 10 répétitions, 90 s de repos. Valide chaque série, le repos démarre seul.',
@@ -364,7 +364,7 @@ export const PRESETS = [
       chip: 'Beep',
       heading: 'Beep timer',
       question: 'What is a beep timer?',
-      title: 'Beep Timer: a beep every 30 s, every minute or any interval · BIP Timer',
+      title: 'Beep Timer: a beep every 30 s, every minute · BIP Timer',
       description:
         'Free online beep timer: a clean beep every 30 seconds, every minute or any interval, for workouts, pacing or study. No install, works offline.',
       intro: 'A beep every 30 seconds, for 30 minutes. Change the interval, then start.',
@@ -602,7 +602,7 @@ PRESETS.push({
     chip: 'Timer Plus',
     heading: 'A free Timer Plus alternative',
     question: 'Why is Timer Plus no longer free?',
-    title: 'Timer Plus alternative: free interval timer, no subscription · BIP Timer',
+    title: 'Timer Plus alternative: free interval timer · BIP Timer',
     description:
       'Timer Plus now asks for a subscription before a timer starts. BIP Timer is a free alternative: no subscription, no ads, no account, no install.',
     intro: 'Timer Plus now wants a subscription. This one is free: set your workout, then start.',
